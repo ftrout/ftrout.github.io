@@ -113,6 +113,29 @@ input {
 }
 table {
 	width: 100%;
+	border-collapse: collapse;
+	margin: 0 0 1.6em 0;
+	font-size: 0.95em;
+	line-height: 1.5;
+}
+thead th {
+	background-color: rgb(var(--gray-light));
+	color: rgb(var(--black));
+	font-weight: 700;
+	border-bottom: 2px solid rgb(var(--border));
+}
+th,
+td {
+	padding: 0.6em 0.9em;
+	text-align: left;
+	vertical-align: top;
+	border-bottom: 1px solid rgb(var(--border));
+}
+tbody tr:last-child td {
+	border-bottom: none;
+}
+tbody tr:nth-child(even) {
+	background-color: rgba(var(--gray-light), 0.45);
 }
 img {
 	max-width: 100%;
