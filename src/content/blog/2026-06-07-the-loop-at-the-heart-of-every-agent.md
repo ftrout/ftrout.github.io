@@ -34,7 +34,22 @@ Here's a single turn of the loop, slowed down. Understanding these five moves is
 
 **5. Loop or stop.** The new observation is now part of the context, and the loop runs again — the model decides its *next* move informed by what just happened. This repeats until the model decides the task is complete, or until a guard you set (a max iteration count, a timeout, a budget) forces it to stop.
 
-The single most important consequence hides in steps 1 and 5: **the model is stateless between turns.** It does not "remember" the last iteration. The *loop* creates the illusion of continuity by re-reading the accumulated transcript every single turn. The agent's memory isn't in the model — it's in the context you rebuild on each pass.
+Stripped to its essentials, the entire thing is about fifteen lines:
+
+```python
+context = [system_prompt, user_request]   # 1. context assembly
+steps = 0
+
+while steps < MAX_STEPS:                   # 5. the guard that ends the loop
+    decision = model(context)              # 2. inference — the only "thinking"
+    if decision.is_final:
+        return decision.answer
+    result = run_tool(decision.tool, decision.args)  # 3. action (the runtime acts, not the model)
+    context.append(result)                 # 4. observation — ground truth comes back in
+    steps += 1
+```
+
+Everything a framework adds is machinery around those lines. And the single most important consequence hides in steps 1 and 5: **the model is stateless between turns.** It does not "remember" the last iteration. The *loop* creates the illusion of continuity by re-reading the accumulated transcript every single turn. The agent's memory isn't in the model — it's in the context you rebuild on each pass.
 
 Internalize that one sentence and most of agent engineering follows from it.
 

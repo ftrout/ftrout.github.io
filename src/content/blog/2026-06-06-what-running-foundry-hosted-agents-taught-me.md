@@ -29,7 +29,14 @@ The thing that would've saved me the agonizing: a single container can expose bo
 
 Early on I did the lazy thing and dropped a token into an environment variable. It worked. It also made me deeply uncomfortable the moment I imagined that image sitting in a registry.
 
-The rule I now follow without exception: **treat the agent like production application code.** No secrets in the image, none in plain env vars. I moved everything to managed identity plus Foundry project connections, and for the values I do pass through env vars I use the connection placeholder syntax — `${{connections.<name>.credentials.<field>}}` — so Foundry resolves the secret at sandbox start instead of leaving it lying around. A nice side effect: the management API never echoes the resolved secret back, so a `GET` on the version just shows the literal placeholder. The one gotcha that bit me: the connection has to exist *before* you deploy the version, or the placeholder silently resolves to empty.
+The rule I now follow without exception: **treat the agent like production application code.** No secrets in the image, none in plain env vars. I moved everything to managed identity plus Foundry project connections, and for the values I do pass through env vars I use the connection placeholder syntax so Foundry resolves the secret at sandbox start instead of leaving it lying around:
+
+```yaml
+env:
+  OPENAI_API_KEY: ${{connections.my-openai.credentials.api_key}}
+```
+
+A nice side effect: the management API never echoes the resolved secret back, so a `GET` on the version just shows the literal placeholder, not the real key. The one gotcha that bit me: the connection has to exist *before* you deploy the version, or the placeholder silently resolves to empty.
 
 Related, and underrated: I assume any input could be hostile now. I log model inputs and outputs, keep user-supplied text clearly delineated, and give the model the narrowest access I can get away with. Prompt injection stops being abstract the first time you watch a trace of an agent almost doing something dumb because a tool returned text it treated as instructions.
 
@@ -47,13 +54,23 @@ Two practical takeaways. First, least privilege belongs on the *agent* identity 
 
 A few small things that stopped causing me grief once they became reflex:
 
-I build for `linux/amd64`, always. I'm on Apple Silicon, and the first image I pushed was quietly ARM and quietly refused to run. `docker build --platform linux/amd64 .` is now muscle memory.
+I build for `linux/amd64`, always. I'm on Apple Silicon, and the first image I pushed was quietly ARM and quietly refused to run. This is now muscle memory:
+
+```bash
+docker build --platform linux/amd64 -t myregistry.azurecr.io/my-agent:v1.0.3 .
+```
 
 I stopped using `:latest`. Unique, immutable tags are the only way I can look at a running agent and actually know what's in it.
 
 I let the platform do the boring parts. Containers serve on `8088` locally, the gateway handles routing in production, and the protocol libraries expose `/readiness` for me — I no longer hand-write health checks. I also stopped redeclaring the `FOUNDRY_*` variables; they're injected automatically, and so is the App Insights connection string. I only declare my own stuff, like the model deployment name.
 
-And I always test locally first. The container serves the same endpoints on `localhost:8088` that it will in production, so a quick `POST` to `/responses` catches most of my dumb mistakes before they cost a deploy cycle.
+And I always test locally first. The container serves the same endpoints on `localhost:8088` that it will in production, so a quick `POST` to `/responses` catches most of my dumb mistakes before they cost a deploy cycle:
+
+```bash
+curl -X POST http://localhost:8088/responses \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-4o", "input": "ping"}'
+```
 
 The one constraint that genuinely annoyed me: the container registry holding my image has to stay reachable on its public endpoint, even inside an otherwise network-isolated setup. Private-network-secured ACR wasn't supported, so I had to plan around it.
 
