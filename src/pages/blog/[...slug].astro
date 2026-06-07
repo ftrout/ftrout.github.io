@@ -1,20 +1,37 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { getPostSlug } from '../../utils';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
+	const posts = (await getCollection('blog')).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+	);
+	return posts.map((post, i) => ({
+		params: { slug: getPostSlug(post.id) },
+		props: {
+			post,
+			newer: posts[i - 1] ?? null,
+			older: posts[i + 1] ?? null,
+		},
 	}));
 }
-type Props = CollectionEntry<'blog'>;
+type Props = {
+	post: CollectionEntry<'blog'>;
+	newer: CollectionEntry<'blog'> | null;
+	older: CollectionEntry<'blog'> | null;
+};
 
-const post = Astro.props;
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { post, newer, older } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
 ---
 
-<BlogPost {...post.data} minutesRead={remarkPluginFrontmatter.minutesRead}>
+<BlogPost
+	{...post.data}
+	minutesRead={remarkPluginFrontmatter.minutesRead}
+	headings={headings}
+	next={newer ? { slug: getPostSlug(newer.id), title: newer.data.title } : undefined}
+	prev={older ? { slug: getPostSlug(older.id), title: older.data.title } : undefined}
+>
 	<Content />
 </BlogPost>
