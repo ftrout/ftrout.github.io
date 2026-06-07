@@ -134,7 +134,7 @@ code {
 /* Code blocks (Shiki sets the background-color inline; we add light chrome) */
 pre {
 	font-family: var(--font-mono);
-	font-size: 0.8em;
+	font-size: 0.75em;
 	line-height: 1.55;
 	padding: 1.25em 1.4em;
 	border-radius: 10px;
