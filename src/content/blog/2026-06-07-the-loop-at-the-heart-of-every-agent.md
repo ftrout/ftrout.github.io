@@ -37,15 +37,15 @@ Here's a single turn of the loop, slowed down. Understanding these five moves is
 Stripped to its essentials, the entire thing is about fifteen lines:
 
 ```python
-context = [system_prompt, user_request]   # 1. context assembly
+context = [system_prompt, user_request]  # 1. assemble context
 steps = 0
 
-while steps < MAX_STEPS:                   # 5. the guard that ends the loop
-    decision = model(context)              # 2. inference — the only "thinking"
+while steps < MAX_STEPS:                  # 5. guard: the loop can end
+    decision = model(context)             # 2. inference (the "thinking")
     if decision.is_final:
         return decision.answer
-    result = run_tool(decision.tool, decision.args)  # 3. action (the runtime acts, not the model)
-    context.append(result)                 # 4. observation — ground truth comes back in
+    result = run_tool(decision.tool)      # 3. act (runtime, not model)
+    context.append(result)                # 4. observe (ground truth)
     steps += 1
 ```
 

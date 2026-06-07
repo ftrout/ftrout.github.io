@@ -57,7 +57,7 @@ A few small things that stopped causing me grief once they became reflex:
 I build for `linux/amd64`, always. I'm on Apple Silicon, and the first image I pushed was quietly ARM and quietly refused to run. This is now muscle memory:
 
 ```bash
-docker build --platform linux/amd64 -t myregistry.azurecr.io/my-agent:v1.0.3 .
+docker build --platform linux/amd64 -t myacr.azurecr.io/agent:v1.0.3 .
 ```
 
 I stopped using `:latest`. Unique, immutable tags are the only way I can look at a running agent and actually know what's in it.

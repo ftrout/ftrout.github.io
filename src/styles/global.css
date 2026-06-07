@@ -134,15 +134,19 @@ code {
 /* Code blocks (Shiki sets the background-color inline; we add light chrome) */
 pre {
 	font-family: var(--font-mono);
-	font-size: 0.85em;
+	font-size: 0.8em;
+	line-height: 1.55;
 	padding: 1.25em 1.4em;
 	border-radius: 10px;
 	border: 1px solid rgb(var(--border));
 	overflow-x: auto;
+	-moz-tab-size: 4;
+	tab-size: 4;
 }
 pre > code {
 	all: unset;
 	font-family: var(--font-mono);
+	tab-size: 4;
 }
 blockquote {
 	border-left: 3px solid var(--accent);
