@@ -1,5 +1,4 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
 import Layout from '../layouts/BlogPost.astro';
 ---
 
@@ -7,12 +6,24 @@ import Layout from '../layouts/BlogPost.astro';
 	title="About Me"
 	description="A little about Frank Trout and this blog."
 	pubDate={new Date('June 06 2026')}
-	heroImage={AboutHeroImage}
 >
+	<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="160" height="160" />
+
 	<p>
 		Hi, I'm Frank Trout. I build and write about production-ready AI agents — the part of the
 		work that happens after the demo, when something actually has to ship, stay secure, and scale.
 	</p>
+
+	<style>
+		.avatar {
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 1px solid rgb(var(--border));
+			margin: 0 0 1.5rem 0;
+		}
+	</style>
 
 	<p>
 		This blog is where I collect field notes from that work: deployment and operational hygiene,

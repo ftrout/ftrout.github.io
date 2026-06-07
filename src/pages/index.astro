@@ -20,6 +20,7 @@ const posts = (await getCollection('blog'))
 		<Header />
 		<main>
 			<section class="hero">
+				<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="96" height="96" />
 				<h1>Building with AI, in production</h1>
 				<p class="lead">
 					Field notes from shipping, securing, and scaling AI agents — and the
@@ -60,6 +61,14 @@ const posts = (await getCollection('blog'))
 	<style>
 		.hero {
 			padding: 2.5rem 0 3.5rem;
+		}
+		.avatar {
+			width: 96px;
+			height: 96px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 1px solid rgb(var(--border));
+			margin: 0 0 1.5rem 0;
 		}
 		.hero h1 {
 			font-size: clamp(2.5rem, 6vw, 4rem);
