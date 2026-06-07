@@ -8,6 +8,8 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
 	site: 'https://ftrout.github.io',
 	base: '/',
+	// Prefetch linked pages on hover for instant navigation.
+	prefetch: true,
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
