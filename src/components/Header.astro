@@ -5,7 +5,7 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2><a href="/" class="gradient-text">{SITE_TITLE}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
@@ -28,12 +28,18 @@ import HeaderLink from './HeaderLink.astro';
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		background: rgba(11, 13, 18, 0.7);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgb(var(--border));
+		position: sticky;
+		top: 0;
+		z-index: 10;
 	}
 	h2 {
 		margin: 0;
-		font-size: 1em;
+		font-size: 1.1em;
+		font-weight: 700;
 	}
 
 	h2 a,
@@ -47,17 +53,29 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+		color: rgb(var(--gray));
+		border-bottom: 2px solid transparent;
 		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+	nav a:hover {
+		color: rgb(var(--black));
 	}
 	nav a.active {
 		text-decoration: none;
+		color: rgb(var(--black));
 		border-bottom-color: var(--accent);
 	}
 	.social-links,
 	.social-links a {
 		display: flex;
+	}
+	.social-links a {
+		color: rgb(var(--gray));
+		transition: color 0.15s ease;
+	}
+	.social-links a:hover {
+		color: var(--accent);
 	}
 	@media (max-width: 720px) {
 		.social-links {
