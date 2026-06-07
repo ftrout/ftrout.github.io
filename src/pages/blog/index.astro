@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -15,89 +14,67 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Blog · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
-			main {
-				width: var(--width-wide);
+			.page-title {
+				margin-bottom: 1.5rem;
 			}
 			ul {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-				gap: 1.5rem;
-				list-style-type: none;
+				list-style: none;
 				margin: 0;
 				padding: 0;
 			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
+			li {
+				padding: 2rem 0;
+				border-top: 1px solid rgb(var(--border));
 			}
-			/* First post is featured: spans the full row with a larger title */
-			ul li:first-child {
-				grid-column: 1 / -1;
-			}
-			ul li:first-child .title {
-				font-size: 2.2rem;
-			}
-			ul li img {
-				margin-bottom: 0.75rem;
-				border-radius: 10px;
-				width: 100%;
-			}
-			ul li a {
-				display: block;
-				height: 100%;
-				padding: 0.85rem;
-				border: 1px solid rgb(var(--border));
-				border-radius: 14px;
-				background: var(--bg-elev);
-			}
-			ul li a:hover {
-				border-color: rgba(167, 139, 250, 0.5);
-				box-shadow:
-					0 0 0 1px rgba(167, 139, 250, 0.25),
-					0 14px 34px rgba(0, 0, 0, 0.5);
-				transform: translateY(-3px);
-			}
-			.title {
-				margin: 0 0 0.25rem 0;
-				color: rgb(var(--black));
-				line-height: 1.2;
+			li:last-child {
+				border-bottom: 1px solid rgb(var(--border));
 			}
 			.date {
-				margin: 0;
+				margin: 0 0 0.4rem 0;
 				color: rgb(var(--gray));
 				font-family: var(--font-mono);
 				font-size: 0.8rem;
 				letter-spacing: 0.02em;
 			}
-			ul li a:hover .title {
+			.title {
+				margin: 0 0 0.4rem 0;
+				font-size: 1.65rem;
+				line-height: 1.25;
+			}
+			.title a {
+				color: rgb(var(--black));
+				text-decoration: none;
+			}
+			.title a:hover {
 				color: var(--accent);
 			}
-			@media (max-width: 520px) {
-				ul li:first-child .title {
-					font-size: 1.6rem;
-				}
+			.description {
+				margin: 0;
+				color: rgb(var(--gray-dark));
+				font-size: 1.05rem;
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
+			<h1 class="page-title">Blog</h1>
 			<section>
 				<ul>
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
+								<p class="date">
+									<FormattedDate date={post.data.pubDate} />
+								</p>
+								<h2 class="title">
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h2>
+								{post.data.description && (
+									<p class="description">{post.data.description}</p>
+								)}
 							</li>
 						))
 					}

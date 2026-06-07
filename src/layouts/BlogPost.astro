@@ -16,45 +16,40 @@ const { title, description, pubDate, updatedDate, heroImage, author, minutesRead
 		<BaseHead title={title} description={description} />
 		<style>
 			main {
-				width: var(--width-wide);
+				width: var(--width-content);
 				max-width: calc(100% - 2em);
 				margin: auto;
 			}
 			.hero-image {
 				width: 100%;
-				margin-bottom: 1em;
+				margin-bottom: 2em;
 			}
 			.hero-image img {
 				display: block;
 				width: 100%;
 				margin: 0 auto;
-				border-radius: 16px;
+				border-radius: 8px;
 				border: 1px solid rgb(var(--border));
-				box-shadow: var(--box-shadow);
 			}
 			.prose {
-				width: var(--width-content);
-				max-width: 100%;
+				width: 100%;
 				margin: auto;
-				padding: 1em 0;
 				color: rgb(var(--gray-dark));
 			}
 			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
+				margin-bottom: 1.5em;
+				text-align: left;
 			}
 			.title h1 {
-				margin: 0 0 0.5em 0;
+				margin: 0 0 0.3em 0;
 				font-size: 2.75em;
 			}
 			.date {
-				margin-bottom: 0.5em;
+				margin-bottom: 0;
 				color: rgb(var(--gray));
 				font-family: var(--font-mono);
 				font-size: 0.8rem;
-				letter-spacing: 0.03em;
+				letter-spacing: 0.02em;
 			}
 			.last-updated-on {
 				font-style: italic;
@@ -83,7 +78,7 @@ const { title, description, pubDate, updatedDate, heroImage, author, minutesRead
 								)
 							}
 						</div>
-						<h1 class="gradient-text">{title}</h1>
+						<h1>{title}</h1>
 						<hr />
 					</div>
 					<slot />

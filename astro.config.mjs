@@ -37,8 +37,8 @@ export default defineConfig({
 	markdown: {
 		remarkPlugins: [remarkReadingTime],
 		shikiConfig: {
-			// Dark code theme to match the site.
-			theme: 'aurora-x',
+			// Light code theme to match the warm editorial look.
+			theme: 'github-light',
 			wrap: false,
 		},
 	},

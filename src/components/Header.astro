@@ -5,7 +5,7 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<h2><a href="/" class="gradient-text">{SITE_TITLE}</a></h2>
+		<h2><a href="/">{SITE_TITLE}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
@@ -28,23 +28,22 @@ import HeaderLink from './HeaderLink.astro';
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: rgba(11, 13, 18, 0.7);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
+		background: var(--bg);
 		border-bottom: 1px solid rgb(var(--border));
-		position: sticky;
-		top: 0;
-		z-index: 10;
 	}
 	h2 {
 		margin: 0;
-		font-size: 1.1em;
+		font-size: 1.05em;
 		font-weight: 700;
 	}
 
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
+		color: rgb(var(--black));
+	}
+	h2 a:hover {
+		color: var(--accent);
 	}
 	nav {
 		display: flex;
