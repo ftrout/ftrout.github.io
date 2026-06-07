@@ -18,6 +18,8 @@ jobs:
       - name: Install, bundle, and build Astro site
         uses: withastro/action@v3
         # This action automatically detects npm, installs dependencies, and runs the build script
+        with:
+          node-version: 22
 
   deploy:
     needs: build
