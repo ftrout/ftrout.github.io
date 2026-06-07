@@ -40,12 +40,12 @@ Stripped to its essentials, the entire thing is about fifteen lines:
 context = [system_prompt, user_request]  # 1. assemble context
 steps = 0
 
-while steps < MAX_STEPS:                  # 5. guard: the loop can end
-    decision = model(context)             # 2. inference (the "thinking")
+while steps < MAX_STEPS:                 # 5. guard: loop ends
+    decision = model(context)            # 2. inference
     if decision.is_final:
         return decision.answer
-    result = run_tool(decision.tool)      # 3. act (runtime, not model)
-    context.append(result)                # 4. observe (ground truth)
+    result = run_tool(decision.tool)     # 3. act, not model
+    context.append(result)               # 4. observe truth
     steps += 1
 ```
 
