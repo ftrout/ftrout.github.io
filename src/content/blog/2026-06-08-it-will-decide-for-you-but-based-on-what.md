@@ -1,5 +1,5 @@
 ---
-title: "It'll Decide For You — But On What?"
+title: "It'll Decide For You — But Based On What?"
 pubDate: 2026-06-08
 description: "Vendors increasingly promise systems that make decisions for you. A decision is only as good as the context behind it — so the question that matters most is the one the demo never answers: where is it getting its data?"
 author: "Frank Trout"
