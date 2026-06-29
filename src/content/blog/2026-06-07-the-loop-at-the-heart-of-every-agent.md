@@ -1,13 +1,15 @@
 ---
 title: "The Loop at the Heart of Every Agent"
 pubDate: 2026-06-07
-description: "What an agent's reasoning loop actually is, how a single iteration works under the hood, and why understanding the loop — not the framework — is what separates configuring an agent from engineering one."
+description: "New to AI agents? An agent's intelligence isn't one clever answer — it's a loop that decides, acts, watches, and repeats. This post slows that loop down to a single turn, explains every piece in plain English, and shows why understanding the loop — not the framework — is what separates configuring an agent from engineering one."
 author: "Frank Trout"
 ---
 
-If you strip away the frameworks, the orchestration diagrams, and the marketing, almost every agent reduces to the same small, stubborn thing: a loop. A language model looks at what it knows, decides on one action, watches what happens, and then looks again. That's it. The sophistication people attribute to agents lives almost entirely in how well that loop is fed and fenced.
+*A note for newcomers: an **agent** is an AI system that doesn't just answer once — it works toward a goal over several steps, deciding each step as it goes. The **language model** (or **LLM**, the AI behind tools like ChatGPT and Claude: you send it text, it sends text back) is the part that makes those decisions. Its **reasoning loop** is the repeating cycle of deciding, acting, and watching the result that lets it tackle a task it can't finish in one shot. This post takes that loop apart, and I'll explain each term as it comes up.*
 
-Most agent bugs I've chased were not really model failures. They were loop failures — the model made a perfectly reasonable decision based on the context it was handed, and the context it was handed was wrong, stale, bloated, or missing the one thing that mattered. You cannot debug that if you don't have a clear picture of the loop. So let's build one.
+If you strip away the frameworks (the software toolkits that package up agent plumbing), the orchestration diagrams, and the marketing, almost every agent reduces to the same small, stubborn thing: a loop. A language model looks at what it knows, decides on one action, watches what happens, and then looks again. That's it. The sophistication people attribute to agents lives almost entirely in how well that loop is fed and fenced.
+
+Most agent bugs I've chased were not really model failures. They were loop failures — the model made a perfectly reasonable decision based on the context it was handed (the text the model gets to read before it decides), and the context it was handed was wrong, stale, bloated, or missing the one thing that mattered. You cannot debug that if you don't have a clear picture of the loop. So let's build one.
 
 ## What the loop *is*
 
@@ -15,8 +17,8 @@ An agent's reasoning loop is the cycle of **decide → act → observe → repea
 
 It helps to place it between the two things it isn't:
 
-- A **single model call** is one-shot. Prompt in, answer out, no loop. Great for "summarize this," useless for "book me a flight given my calendar."
-- A **fixed workflow** pins the steps in advance — the path is decided by *your code*, not the model. Predictable, auditable, but rigid.
+- A **single model call** is one-shot. Prompt (the text you send the model) in, answer out, no loop. Great for "summarize this," useless for "book me a flight given my calendar."
+- A **fixed workflow** — a pipeline whose steps are wired up ahead of time — pins the steps in advance, so the path is decided by *your code*, not the model. Predictable, auditable, but rigid.
 
 The agent loop sits in the middle and trades that rigidity for adaptability: the *model* decides each step at runtime, using feedback from the previous one. That's the whole reason agents can handle open-ended tasks where you can't predict the steps ahead of time — and also the whole reason they're harder to control.
 
@@ -24,17 +26,17 @@ The agent loop sits in the middle and trades that rigidity for adaptability: the
 
 Here's a single turn of the loop, slowed down. Understanding these five moves is the entire game.
 
-**1. Context assembly.** Before the model does anything, something — the framework, your code, the platform — assembles the prompt it will actually see this turn. That's the system instructions, the conversation so far, any tool definitions, and crucially *the results of every tool call made earlier in this same task.* This assembled context is the agent's entire working memory for the turn.
+**1. Context assembly.** Before the model does anything, something — the framework, your code, the platform — assembles the prompt it will actually see this turn (this gathering-up step is called *context assembly*). That's the system instructions (the standing orders that tell the model who it is and how to behave), the conversation so far, any tool definitions (descriptions of the actions the model is allowed to take), and crucially *the results of every tool call made earlier in this same task.* This assembled context is the agent's entire working memory for the turn.
 
-**2. Inference / decision.** The model reads that context and produces one decision: either *respond to the user* (and possibly finish) or *call a tool*, with the specific arguments it wants to pass. This is the only "thinking" step. Everything else is plumbing around it.
+**2. Inference / decision.** The model reads that context and produces one decision — *inference* is just the technical word for the model running once to generate output. It either *responds to the user* (and possibly finishes) or *calls a tool* (asks to run one of those actions), with the specific arguments it wants to pass. This is the only "thinking" step. Everything else is plumbing around it.
 
-**3. Action.** If the model chose a tool, your runtime executes it — hits the API, runs the code, queries the database. The model does not do this; it only *requests* it. The boundary matters: the model proposes, the environment disposes.
+**3. Action.** If the model chose a tool, your runtime (the surrounding program that actually runs things) executes it — hits the API, runs the code, queries the database. The model does not do this; it only *requests* it. The boundary matters: the model proposes, the environment disposes.
 
-**4. Observation.** The tool returns a result, and that result gets appended to the context. This is the agent gaining **ground truth** — real feedback from the world rather than something it imagined. A search returns hits; a code run returns output or an error; a payment API returns success or a failure code.
+**4. Observation.** The tool returns a result, and that result gets appended to (added onto the end of) the context. This is the agent gaining **ground truth** — real feedback from the world rather than something it imagined. A search returns hits; a code run returns output or an error; a payment API returns success or a failure code.
 
-**5. Loop or stop.** The new observation is now part of the context, and the loop runs again — the model decides its *next* move informed by what just happened. This repeats until the model decides the task is complete, or until a guard you set (a max iteration count, a timeout, a budget) forces it to stop.
+**5. Loop or stop.** The new observation is now part of the context, and the loop runs again — the model decides its *next* move informed by what just happened. This repeats until the model decides the task is complete, or until a guard you set (a *max iteration* count — a hard cap on how many times the loop is allowed to run — a timeout, a budget) forces it to stop.
 
-Stripped to its essentials, the entire thing is about fifteen lines:
+Stripped to its essentials, the entire thing is about fifteen lines of code. Even if you don't read code, you can follow the shape: set up the starting context, then repeat — ask the model, stop if it says it's done, otherwise run the tool it asked for and tack the result onto the context — until either the model finishes or you hit the step limit:
 
 ```python
 context = [system_prompt, user_request]  # 1. assemble context
@@ -49,7 +51,7 @@ while steps < MAX_STEPS:                 # 5. guard: loop ends
     steps += 1
 ```
 
-Everything a framework adds is machinery around those lines. And the single most important consequence hides in steps 1 and 5: **the model is stateless between turns.** It does not "remember" the last iteration. The *loop* creates the illusion of continuity by re-reading the accumulated transcript every single turn. The agent's memory isn't in the model — it's in the context you rebuild on each pass.
+Everything a framework adds is machinery around those lines. And the single most important consequence hides in steps 1 and 5: **the model is stateless between turns** — meaning it keeps no memory of its own from one turn to the next; each call starts from a blank slate. It does not "remember" the last iteration. The *loop* creates the illusion of continuity by re-reading the accumulated transcript (the full running record of everything so far) every single turn. The agent's memory isn't in the model — it's in the context you rebuild on each pass.
 
 Internalize that one sentence and most of agent engineering follows from it.
 
@@ -59,11 +61,11 @@ Once you see the agent as "a stateless model re-reading a growing transcript in 
 
 ### Context is the product
 
-Because the model re-reads everything each turn, *what's in the context* is the single biggest lever you have. Too little and the model is flying blind. Too much and you hit the quieter failure: a model swamped with thousands of tokens of prior tool output gets distracted, loses the thread of the original instruction, and starts making worse decisions even though nothing "broke." This is why context management — pruning old observations, summarizing long histories, keeping only what the next decision needs — is not an optimization. It's the core craft.
+Because the model re-reads everything each turn, *what's in the context* is the single biggest lever you have. Too little and the model is flying blind. Too much and you hit the quieter failure: a model swamped with thousands of tokens (chunks of text, each roughly a word or part of one) of prior tool output gets distracted, loses the thread of the original instruction, and starts making worse decisions even though nothing "broke." This is why context management — pruning old observations, summarizing long histories, keeping only what the next decision needs — is not an optimization. It's the core craft.
 
 ### Cost and latency are per-turn, and they accumulate
 
-Every iteration is a fresh inference over the *entire* current context. A ten-step task isn't one model call; it's ten, each larger than the last as observations pile up. That's why a chatty agent that takes fifteen tool calls to do what five would is not just slow — it's quadratically expensive, because each of those extra turns re-reads everything before it.
+Every iteration is a fresh inference (the model running again from scratch) over the *entire* current context. A ten-step task isn't one model call; it's ten, each larger than the last as observations pile up. That's why a chatty agent that takes fifteen tool calls to do what five would is not just slow — it's quadratically expensive (the cost grows faster and faster, not in a straight line), because each of those extra turns re-reads everything before it.
 
 ### Errors compound — and ground truth is the antidote
 
@@ -71,15 +73,15 @@ A single reasonable-looking mistake early in the loop poisons every decision aft
 
 ### Tool descriptions are read on *every* loop
 
-The definitions of the tools available to the agent sit in the context the model reads each turn. A vague tool description doesn't cause a one-time mistake — it degrades every decision the agent makes about whether and how to use that tool, for the entire task. This is why investing in the agent-facing interface (clear names, tight parameters, an example) pays off so disproportionately: you're not improving one call, you're improving every iteration.
+The definitions of the tools available to the agent — the written descriptions of each action it can take — sit in the context the model reads each turn. A vague tool description doesn't cause a one-time mistake — it degrades every decision the agent makes about whether and how to use that tool, for the entire task. This is why investing in the agent-facing interface (clear names, tight parameters, an example) pays off so disproportionately: you're not improving one call, you're improving every iteration.
 
 ### Agents loop forever unless you stop them
 
-A model with no progress and no guard will happily call the same tool ten times, or ping-pong between two tools, or keep "thinking" without converging. The loop has no inherent off-switch except the model deciding it's done — which it sometimes never does. Explicit stopping conditions (max iterations, wall-clock or token budgets) aren't safety theater; they're load-bearing. The best ones also detect *lack of progress* — if the last three turns produced no new information, that's a signal to stop and ask a human, not to keep grinding.
+A model with no progress and no guard will happily call the same tool ten times, or ping-pong between two tools, or keep "thinking" without converging. The loop has no inherent off-switch except the model deciding it's done — which it sometimes never does. Explicit stopping conditions (a max-iteration cap, a wall-clock time limit, or a ceiling on how many tokens you'll spend) aren't safety theater; they're load-bearing. The best ones also detect *lack of progress* — if the last three turns produced no new information, that's a signal to stop and ask a human, not to keep grinding.
 
 ### You debug by reading the loop
 
-When an agent does something baffling, the answer is almost never "the model is bad." It's in the trace: the context at the turn things went wrong, the decision it made, the observation it got back. If you can't inspect each iteration — the exact context in, the exact decision out, the exact tool result — you are debugging blind. This is why per-step traces (run steps, OpenTelemetry spans, whatever your platform calls them) are not a nice-to-have. The loop is invisible by default, and an invisible loop is an undebuggable one.
+When an agent does something baffling, the answer is almost never "the model is bad." It's in the trace (a recorded play-by-play of what the agent did): the context at the turn things went wrong, the decision it made, the observation it got back. If you can't inspect each iteration — the exact context in, the exact decision out, the exact tool result — you are debugging blind. This is why per-step traces (run steps, OpenTelemetry spans — OpenTelemetry is a standard for recording these step-by-step logs, and a "span" is one recorded step — whatever your platform calls them) are not a nice-to-have. The loop is invisible by default, and an invisible loop is an undebuggable one.
 
 ## The failure modes, named
 
@@ -89,7 +91,7 @@ Most agent pathologies are just specific ways the loop goes wrong:
 | --- | --- |
 | Agent "forgets" an early instruction | Context grew so large the instruction got buried; the model is attending to recent noise |
 | Confidently wrong after a few steps | It acted on a bad observation that's now trusted context |
-| Calls the same tool over and over | No progress detection, no stopping guard — a doom loop |
+| Calls the same tool over and over | No progress detection, no stopping guard — a doom loop (it spins forever without getting anywhere) |
 | Slows down and costs balloon over a task | Context accreting every turn; each inference re-reads more |
 | Misuses a tool | A weak tool description, re-read and misinterpreted every iteration |
 
