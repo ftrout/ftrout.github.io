@@ -52,6 +52,8 @@ Here's the diagnostic. The layers are roughly ordered cheapest-to-most-expensive
 
 Most problems — more than people expect — are solved in the top two rows. Let's look at the distinctions that actually trip people up.
 
+If you want the principle made concrete, I put a [runnable worked example on GitHub](https://github.com/ftrout/ftrout.github.io/blob/main/examples/three-tier-support/support_tiers.py): the same customer-support task built three ways — plain deterministic code, a single LLM call, and a full agent loop — with a router that sends each request to the cheapest tier that can handle it. It's this ladder collapsed to its three load-bearing rungs, in about 150 lines of Python.
+
 ## Prompt vs. knowledge: *how* vs. *what*
 
 This is the most common confusion, and it's worth getting crisp.
