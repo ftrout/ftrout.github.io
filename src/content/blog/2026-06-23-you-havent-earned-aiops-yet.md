@@ -1,11 +1,9 @@
 ---
 title: "You Haven't Earned AIOps Yet: Engineering Is the Prerequisite, Not the Payoff"
 pubDate: 2026-06-23
-description: "New to building with AI? AIOps is sold as the thing that fixes your operations. It's actually the thing that exposes them. Anomaly detection, auto-remediation, and self-healing infrastructure don't rescue an immature engineering org - they require one. A plain-language look at why the discipline everyone wants to skip is the discipline that makes the AI work at all."
+description: "AIOps is sold as the thing that fixes your operations. It's actually the thing that exposes them. Anomaly detection, auto-remediation, and self-healing infrastructure don't rescue an immature engineering org - they require one. The discipline everyone wants to skip is the discipline that makes the AI work at all."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: **AIOps** means using AI to run IT operations — the work of keeping software systems healthy and fixing them when they break. **Engineering maturity** is just how disciplined and well-organized your team's practices already are: are your systems set up in a consistent, repeatable, written-down way, or held together by hand? This post argues that AIOps only works if that foundation is already solid, and I'll explain each term as it comes up.*
 
 The pitch is irresistible to anyone who's run a tired ops team: an AI layer watches your systems, spots the incident — an outage or failure — before the pager fires, correlates the noise into a *root cause* (the one underlying problem behind all the symptoms), and - increasingly - fixes it without waking anyone up. Self-healing infrastructure, where the system repairs itself automatically. Predictive operations. The NOC — the network operations center, the room of screens where a team watches everything — that runs itself. It's sold as a way *out* of operational chaos, a smart layer you bolt on top of the mess you already have.
 

@@ -1,11 +1,9 @@
 ---
 title: "It'll Decide For You — But Based On What?"
 pubDate: 2026-06-08
-description: "New to building with AI? Vendors increasingly promise systems that make decisions for you. A decision is only as good as the context behind it — so the question that matters most is the one the demo never answers: where is it getting its data?"
+description: "Vendors increasingly promise systems that make decisions for you. A decision is only as good as the context behind it — so the question that matters most is the one the demo never answers: where is it getting its data?"
 author: "Frank Trout"
 ---
-
-*A note for newcomers: a "context-driven decision" just means a choice an AI system makes based on whatever information it was handed at that moment — your data, documents pulled in from elsewhere, the conversation so far. The same AI fed different information will decide differently. This post is about why the information going *in* matters more than the cleverness of the system itself, and I'll explain each term as it comes up.*
 
 The pitch has gotten very good. A vendor walks you through a demo where an **agent** — an AI system that takes actions on its own, not just answers questions — reads the situation, weighs the options, and just *handles it* — approves the expense, reprioritizes the queue, picks the supplier, routes the ticket, flags the risk. No human in the loop, no fuss. "It decides for you." The slide deck is clean, the demo input is tidy, and the room nods along.
 

@@ -1,11 +1,9 @@
 ---
 title: "What Running Foundry Hosted Agents Taught Me"
 pubDate: 2026-06-06
-description: "New to building with AI? Lessons from running Microsoft Foundry hosted agents in production — the operational, cost, and security realities that surface once real traffic shows up, explained from the ground up."
+description: "Lessons from running Microsoft Foundry hosted agents in production — the operational, cost, and security realities that surface once real traffic shows up."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: **Azure AI Foundry** is Microsoft's cloud platform for building and running AI applications. An **agent** is an AI program that doesn't just answer questions but takes actions — calling tools, looking things up, doing multi-step work. A **hosted agent** means Microsoft runs the servers and plumbing for you; you just bring your code. This post is a hands-on field report, and I'll define each term as it comes up.*
 
 I've been building on Foundry's hosted agents for a while now — long enough to have a few scars, a couple of cost surprises I'd rather forget, and a working mental model I wish someone had handed me on day one. This is that handoff. Less "here's the feature list," more "here's what actually mattered once real traffic showed up."
 

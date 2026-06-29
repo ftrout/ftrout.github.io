@@ -1,11 +1,9 @@
 ---
 title: "The Simplest Agent That Could Possibly Work"
 pubDate: 2026-06-07
-description: "New to building with AI? A plain-English mental model for agent design: diagnose the gap, then reach for the cheapest layer that closes it. On single agents, prompts vs. knowledge, skills, agents-as-tools — and earning every bit of complexity you add."
+description: "A mental model for agent design: diagnose the gap, then reach for the cheapest layer that closes it. On single agents, prompts vs. knowledge, skills, agents-as-tools — and earning every bit of complexity you add."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **agent** is an app built around an LLM (the AI behind tools like ChatGPT and Claude) that can take actions on its own, not just chat. This post is about how to make one better when it falls short — and the layers you reach for are a **prompt** (the instructions you give the model), **knowledge** (facts you fetch and feed it), a **skill** (a packaged how-to procedure), a **tool** (a way for it to act on the world), and a **workflow** (a fixed sequence of steps). I explain each one as it comes up; the whole argument is "add the cheapest of these that fixes your actual problem, and nothing more."*
 
 There's a moment in every agent project where someone says "what if we had a second agent for that?" It always sounds reasonable. It almost never is — at least not yet.
 

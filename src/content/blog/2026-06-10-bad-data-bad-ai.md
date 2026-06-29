@@ -1,11 +1,9 @@
 ---
 title: "Bad Data, Bad AI: The Part No Model Can Save You From"
 pubDate: 2026-06-10
-description: "New to building with AI? Everyone wants a better model. Almost no one wants to fix their data. But the model is the cheap part — the ceiling on what any AI system can do is set by the quality of what you feed it, and no amount of parameters buys its way past garbage in. A beginner-friendly look at why."
+description: "Everyone wants a better model. Almost no one wants to fix their data. But the model is the cheap part — the ceiling on what any AI system can do is set by the quality of what you feed it, and no amount of parameters buys its way past garbage in."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **AI model** here means a large language model (LLM) — the kind of system behind tools like ChatGPT and Claude, which takes in text and produces text back. The whole point of this post is one rule: the quality of what comes out is capped by the quality of the data you put in, and no fancier model buys its way past that. I'll explain each term as it comes up.*
 
 There's a comforting story we tell ourselves about AI projects that disappoint: the model — the AI system doing the reasoning — wasn't good enough. So we wait for the next release, swap in a bigger one, tweak the prompt (the instructions and question we type in) for the fortieth time — and the thing is still wrong in the same ways it was wrong before. The model was never the problem. The data was. And the uncomfortable truth, the one that doesn't fit on a slide, is that **a better model fed bad data just gives you wrong answers faster and more fluently.**
 

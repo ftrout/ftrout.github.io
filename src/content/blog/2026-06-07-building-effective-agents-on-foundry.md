@@ -1,11 +1,9 @@
 ---
 title: "Building Effective Agents on Microsoft Foundry"
 pubDate: 2026-06-07
-description: "New to building AI agents? A section-by-section translation of Anthropic's 'Building Effective Agents' into Microsoft Foundry — mapping each pattern to the workflows, model router, Toolbox, Agent Framework, and hosted-agent primitives that implement it, with the jargon explained as it comes up."
+description: "A section-by-section translation of Anthropic's 'Building Effective Agents' into Microsoft Foundry — mapping each pattern to the workflows, model router, Toolbox, Agent Framework, and hosted-agent primitives that implement it."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **LLM** — large language model — is the AI behind tools like ChatGPT and Claude; you send it text and it sends text back. An **agent** is an app that lets the LLM decide what to do and call out to other tools in a loop, rather than following a fixed script. **Microsoft Foundry** (formerly Azure AI Foundry) is Microsoft's platform for building, hosting, and running those agents. This post maps a well-known set of agent design patterns onto Foundry's building blocks, and I'll explain each term as it comes up.*
 
 Anthropic's [*Building Effective Agents*](https://www.anthropic.com/engineering/building-effective-agents) has become a kind of common vocabulary for people shipping LLM systems (apps built around a large language model). Its core argument is refreshingly unfashionable: the most successful implementations aren't the ones reaching for the most complex framework — they're the ones built from simple, composable patterns, with complexity added only when it demonstrably earns its place.
 

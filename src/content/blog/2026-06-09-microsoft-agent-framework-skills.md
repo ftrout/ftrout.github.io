@@ -1,11 +1,9 @@
 ---
 title: "Skills in the Microsoft Agent Framework: A Read-Through Before I Reach for One"
 pubDate: 2026-06-09
-description: "New to AI agents? A 'skill' is a reusable bundle of expertise you can hand an AI assistant. This is me reading the Microsoft Agent Framework docs carefully — figuring out what skills actually are, how they load only when needed, and the specific cases where I'd reach for one or deliberately not — explaining the jargon as I go."
+description: "A 'skill' is a reusable bundle of expertise you can hand an AI assistant. This is me reading the Microsoft Agent Framework docs carefully — figuring out what skills actually are, how they load only when needed, and the specific cases where I'd reach for one or deliberately not."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: the **Microsoft Agent Framework** is a toolkit for building **AI agents** — programs that wrap a large language model (the AI behind tools like ChatGPT) so it can take actions, not just chat. A **skill**, in this framework, is a reusable package of know-how you can hand an agent: instructions, reference docs, and optional code, all in one bundle. This post walks through what skills are and when to use them, and I'll explain each term as it comes up.*
 
 I haven't built a skill in the Microsoft Agent Framework yet. What follows is me reading the documentation closely and reasoning about it the way I'd want someone to reason before adding a new abstraction — a new layer of machinery — to a system I have to operate. I've written before about [reaching for the cheapest layer that closes the gap](/blog/simplest-agent-that-could-possibly-work) — skills are a rung on that ladder, and the docs are unusually clear about when *not* to climb to it. That's a good sign.
 

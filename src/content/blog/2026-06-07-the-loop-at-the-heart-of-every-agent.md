@@ -1,11 +1,9 @@
 ---
 title: "The Loop at the Heart of Every Agent"
 pubDate: 2026-06-07
-description: "New to AI agents? An agent's intelligence isn't one clever answer — it's a loop that decides, acts, watches, and repeats. This post slows that loop down to a single turn, explains every piece in plain English, and shows why understanding the loop — not the framework — is what separates configuring an agent from engineering one."
+description: "What an agent's reasoning loop actually is, how a single iteration works under the hood, and why understanding the loop — not the framework — is what separates configuring an agent from engineering one."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **agent** is an AI system that doesn't just answer once — it works toward a goal over several steps, deciding each step as it goes. The **language model** (or **LLM**, the AI behind tools like ChatGPT and Claude: you send it text, it sends text back) is the part that makes those decisions. Its **reasoning loop** is the repeating cycle of deciding, acting, and watching the result that lets it tackle a task it can't finish in one shot. This post takes that loop apart, and I'll explain each term as it comes up.*
 
 If you strip away the frameworks (the software toolkits that package up agent plumbing), the orchestration diagrams, and the marketing, almost every agent reduces to the same small, stubborn thing: a loop. A language model looks at what it knows, decides on one action, watches what happens, and then looks again. That's it. The sophistication people attribute to agents lives almost entirely in how well that loop is fed and fenced.
 

@@ -1,11 +1,9 @@
 ---
 title: "The Most Agents Don't Win — The Best Foundation Does"
 pubDate: 2026-06-28
-description: "New to building with AI? You'll hear that 'the organization with the most agents wins.' It's the wrong scoreboard. Agents aren't an asset you accumulate — they're the output of everything underneath them. A plain-language argument for why the foundation is the whole game."
+description: "You'll hear that 'the organization with the most agents wins.' It's the wrong scoreboard. Agents aren't an asset you accumulate — they're the output of everything underneath them. Why the foundation is the whole game."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **agent** is an AI system that can take actions on its own — it reads a situation, decides what to do, does it, looks at the result, and repeats. When I say **foundation**, I mean the unglamorous layer underneath the agents: your data, your context, your ability to see and operate what you've built. This post is about why that layer, not the agent count, is what actually decides who wins.*
 
 I keep hearing it. On stage at conferences, in vendor decks, all over my feed, usually said with the confidence of something too obvious to question: **"The organization with the most agents wins."** Deploy more agents than your competitors, automate more of the work, and you pull ahead. It has the ring of a land grab — plant the most flags, own the most territory.
 

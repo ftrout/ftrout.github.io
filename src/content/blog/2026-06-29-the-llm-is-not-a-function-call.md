@@ -1,11 +1,9 @@
 ---
 title: "How the LLM Reshapes Your Architecture"
 pubDate: 2026-06-29
-description: "New to building with AI? An LLM isn't a normal piece of code you plug in. It's unpredictable, forgetful, costly, slow, and sometimes confidently wrong — and each of those traits forces a design decision somewhere else in your app. A beginner-friendly tour of why a model doesn't just sit inside your architecture; it reshapes it."
+description: "An LLM isn't a normal piece of code you plug in. It's unpredictable, forgetful, costly, slow, and sometimes confidently wrong — and each of those traits forces a design decision somewhere else in your app. A tour of why a model doesn't just sit inside your architecture; it reshapes it."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **LLM** — large language model — is the AI behind tools like ChatGPT and Claude. You send it some text (a "prompt") and it sends text back. "Architecture" just means how the pieces of your application fit together. This post is about how adding an LLM to an app quietly changes the shape of everything else, and I'll explain each term as it comes up.*
 
 Every piece of software you've ever built with behaves itself. A **function** — a small block of code you call to get a result — returns the same answer every time you give it the same input. A **database** remembers what you told it. Calling a bit of code costs effectively nothing and finishes faster than you can blink. You don't *design around* these properties — you assume them, so completely that you've forgotten they're assumptions. They're the solid ground the rest of your app stands on without anyone noticing the ground is there.
 

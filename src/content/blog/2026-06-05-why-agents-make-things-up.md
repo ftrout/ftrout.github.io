@@ -1,11 +1,9 @@
 ---
 title: "Why Agents Make Things Up — and How to Contain It"
 pubDate: 2026-06-05
-description: "New to building with AI? Here's what hallucinations actually are, the related failure modes that distort a model's output, why you can't fully eliminate them, and a layered set of controls for making wrong answers rare, visible, and cheap."
+description: "What hallucinations actually are, the related failure modes that distort output, why you can't fully eliminate them, and a layered control stack for making wrong answers rare, visible, and cheap."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: a **language model** (or **LLM**, large language model) is the AI behind tools like ChatGPT and Claude — you send it text and it sends text back. An **agent** is just a model wired into a loop so it can take steps and use **tools** (bits of code that let it look things up or act in the world). A **hallucination** is when the model states something false but sounds completely sure of it. This post is about why that happens and how to keep it from hurting you, and I'll explain each term as it comes up.*
 
 The most dangerous thing a language model does isn't being wrong. It's being wrong *fluently* — producing a confident, well-formatted, plausible answer that happens to be fiction, with none of the hedging a human would show when they're guessing. A model will invent a citation, a case number, a setting in some software's interface, or a refund policy in exactly the same tone it uses for things it's certain about. That mismatch between how sure it sounds and whether it's actually correct is the whole problem.
 

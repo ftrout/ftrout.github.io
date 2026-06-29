@@ -1,11 +1,9 @@
 ---
 title: "The Foundry Toolbox: Notes From a Week of Testing It in Dev"
 pubDate: 2026-06-05
-description: "New to building AI agents? Foundry's Toolbox lets you bundle a set of tools once, version it, and hand any agent a single address instead of wiring tools in code. I've been testing it in dev — here's what it actually is, when it earns its place, when it's overkill, and the best practices I wish I'd known on day one."
+description: "Foundry's Toolbox lets you bundle a set of tools once, version it, and hand any agent a single address instead of wiring tools in code. I've been testing it in dev — here's what it actually is, when it earns its place, when it's overkill, and the best practices I wish I'd known on day one."
 author: "Frank Trout"
 ---
-
-*A note for newcomers: an **agent** is an AI app that can not only chat but take actions by calling **tools** — small capabilities like "search the web" or "run code." **Azure AI Foundry** is Microsoft's platform for building those agents, and its **Toolbox** is a feature that lets you group a set of tools together once and reuse the bundle. I'll define the rest of the jargon as it comes up.*
 
 I've spent the last week with the Foundry **Toolbox** wired into a dev (development, i.e. not-yet-live) project, and it's one of those features that looks like a small convenience and turns out to be an architectural decision. So before it quietly becomes load-bearing in something I ship, I want to write down what it is, where it pulls its weight, where it's overkill, and the handful of things I learned the slightly-hard way.
 
