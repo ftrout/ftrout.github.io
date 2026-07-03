@@ -1,6 +1,6 @@
 ---
 title: "I Didn't Build an Agent: A GRC Copilot Case Study"
-pubDate: 2026-07-04
+pubDate: 2026-07-07
 description: "A security team needed an assistant that produces audit-ready governance, risk, and compliance work. The obvious 2026 move is 'build an AI agent' — and there already was one, an autonomous multi-agent setup that didn't work. The most important decision in rebuilding it was to stop building an agent. A case study in making the AI the smallest, most-boxed part of the system."
 author: "Frank Trout"
 ---
