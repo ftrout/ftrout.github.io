@@ -5,7 +5,7 @@ description: "A security team needed an assistant that produces audit-ready gove
 author: "Frank Trout"
 ---
 
-A security team I worked with needed an assistant that could produce **audit-ready GRC work** — governance, risk, and compliance deliverables: risk ratings, control mappings, third-party vendor risk reviews, cloud-posture reports, client security-questionnaire responses. These are the documents that feed audits and authorizations. They have a known structure, known inputs, and a high cost of being wrong.
+A security team I work with needed an assistant that could produce **audit-ready GRC work** — governance, risk, and compliance deliverables: risk ratings, control mappings, third-party vendor risk reviews, cloud-posture reports, client security-questionnaire responses. These are the documents that feed audits and authorizations. They have a known structure, known inputs, and a high cost of being wrong.
 
 The obvious 2026 answer is "build an AI agent." In fact, one already existed: an autonomous, multi-agent setup — a supervisor model that chatted with sub-agents and decided its own steps. It did not work. It dropped sections, over-called, hung, truncated its own output, and ignored its own instructions. I decided to rebuild it, and the single most important decision I made was to **stop building an agent.**
 
