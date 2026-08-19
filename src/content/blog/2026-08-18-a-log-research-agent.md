@@ -225,7 +225,7 @@ The last piece is the report contract, and it's where analyst discipline transfe
 
 The fourth section is the one I care most about. A brief that only lists what was found reads as complete, and the analyst downstream inherits a false sense of coverage. Naming the gaps — which sources weren't available, which query would settle the open question — is what makes it an honest artifact rather than a confident one. Two rules enforce the rest: every factual claim carries a `source:line` citation, and confirmed activity is never blended into the same sentence as inference.
 
-And then a human reads it, at 2 a.m., in about ninety seconds instead of six hours.
+And then a human reads it, at 2 a.m., in about ninety seconds instead of six hours. That reader is the actual control in this design, which means the brief has to be built for them — [evidence they can disagree with, not a verdict to rubber-stamp](/blog/a-human-in-the-loop-is-not-a-control).
 
 ## What this doesn't replace
 
