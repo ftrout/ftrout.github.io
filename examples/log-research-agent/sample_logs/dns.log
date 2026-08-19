@@ -1,0 +1,16 @@
+2026-03-14T02:08:03Z resolver-a client=192.0.2.31 query=storage.internal.example.com type=A answer=10.14.2.9 rcode=NOERROR
+2026-03-14T02:44:01Z resolver-a client=192.0.2.19 query=app.example.com type=A answer=10.14.1.4 rcode=NOERROR
+2026-03-14T03:34:20Z resolver-a client=198.51.100.77 query=app.example.com type=A answer=10.14.1.4 rcode=NOERROR
+2026-03-14T03:39:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:41:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:43:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:45:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:47:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:49:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:51:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:53:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T03:55:44Z resolver-b client=10.14.1.4 query=cdn-metrics-eu.example.net type=A answer=198.51.100.90 rcode=NOERROR
+2026-03-14T04:00:12Z resolver-a client=192.0.2.19 query=updates.vendor.example.org type=A answer=203.0.113.200 rcode=NOERROR
+2026-03-14T04:14:36Z resolver-a client=192.0.2.19 query=app.example.com type=A answer=10.14.1.4 rcode=NOERROR
+2026-03-14T05:30:02Z resolver-a client=192.0.2.31 query=storage.internal.example.com type=A answer=10.14.2.9 rcode=NOERROR
+2026-03-14T06:03:10Z resolver-a client=192.0.2.19 query=app.example.com type=A answer=10.14.1.4 rcode=NOERROR

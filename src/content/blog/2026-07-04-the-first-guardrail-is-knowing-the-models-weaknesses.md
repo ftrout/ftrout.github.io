@@ -29,7 +29,7 @@ You'd assume the model reads everything you give it with equal care. It doesn't.
 
 This has immediate, concrete consequences once you know it. The critical constraint does not go in paragraph fourteen of a wall of text. The most important instruction goes where attention is highest. A long retrieved document with the key clause in the middle is a document whose key clause may not register. And it compounds with the first weakness: an instruction that's *both* a suggestion *and* parked in the low-attention zone is barely an instruction at all.
 
-The guardrail: place load-bearing instructions at the edges, keep the context tight enough that there's no dead middle to get lost in, and — since [what you put in the context each turn is itself the core craft](/blog/it-will-decide-for-you-but-based-on-what) — treat position as a design variable, not an afterthought.
+The guardrail: place load-bearing instructions at the edges, keep the context tight enough that there's no dead middle to get lost in, and — since [what you put in the context each turn is itself the core craft](/blog/the-loop-at-the-heart-of-every-agent) — treat position as a design variable, not an afterthought.
 
 ## Weakness 3: more instructions are not more control
 
