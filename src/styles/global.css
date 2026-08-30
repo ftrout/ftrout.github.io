@@ -27,11 +27,10 @@
 	--bg-elev: #fffdf8; /* cards */
 
 	/* ---------- Type ---------- */
-	/* --font-inter / --font-newsreader are injected by astro:assets <Font>. */
-	--font-sans: var(--font-inter);
-	--font-display: var(--font-newsreader);
-	--font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', 'Fira Code', Consolas,
-		'Courier New', monospace;
+	/* Injected by astro:assets <Font>. Serif reads, sans is chrome. */
+	--font-serif: var(--font-literata);
+	--font-sans: var(--font-dm-sans);
+	--font-mono: var(--font-jetbrains-mono);
 
 	/* Fluid scale — ~1.2 ratio on phones opening to ~1.25 on desktop. */
 	--step--2: clamp(0.7rem, 0.68rem + 0.09vw, 0.76rem);
@@ -82,7 +81,7 @@ html {
 }
 
 body {
-	font-family: var(--font-sans);
+	font-family: var(--font-serif);
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -91,7 +90,7 @@ body {
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
 	font-size: var(--step-0);
-	line-height: 1.65;
+	line-height: 1.7;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-synthesis-weight: none;
@@ -127,7 +126,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: var(--font-display);
+	font-family: var(--font-serif);
 	margin: 0 0 var(--space-2xs) 0;
 	color: rgb(var(--black));
 	line-height: 1.15;

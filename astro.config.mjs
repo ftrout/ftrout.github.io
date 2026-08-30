@@ -43,28 +43,45 @@ export default defineConfig({
 		},
 	},
 	integrations: [mdx(), sitemap()],
+	/*
+	  Anthropic's own sites use Styrene (sans), Tiempos Text (body serif),
+	  Copernicus (display serif) and JetBrains Mono. The first three are
+	  commercial licences; these are the closest freely available stand-ins,
+	  arranged the same way — serif for reading, sans for chrome.
+	*/
 	fonts: [
-		// UI, navigation, meta, and body copy.
+		// Reading face: body copy and headlines. Stands in for Tiempos Text.
 		{
 			provider: fontProviders.google(),
-			name: 'Inter',
-			cssVariable: '--font-inter',
+			name: 'Literata',
+			cssVariable: '--font-literata',
 			weights: [400, 500, 600, 700],
+			styles: ['normal', 'italic'],
+			subsets: ['latin'],
+			display: 'swap',
+			fallbacks: ['ui-serif', 'Georgia', 'serif'],
+		},
+		// Chrome: navigation, footer, labels. Stands in for Styrene.
+		{
+			provider: fontProviders.google(),
+			name: 'DM Sans',
+			cssVariable: '--font-dm-sans',
+			weights: [400, 500, 700],
 			styles: ['normal'],
 			subsets: ['latin'],
 			display: 'swap',
 			fallbacks: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
 		},
-		// Display face for headlines — the editorial half of the pairing.
+		// Dates, eyebrows, code. The one face they use that is actually free.
 		{
 			provider: fontProviders.google(),
-			name: 'Newsreader',
-			cssVariable: '--font-newsreader',
-			weights: [400, 500, 600],
-			styles: ['normal', 'italic'],
+			name: 'JetBrains Mono',
+			cssVariable: '--font-jetbrains-mono',
+			weights: [400, 500],
+			styles: ['normal'],
 			subsets: ['latin'],
 			display: 'swap',
-			fallbacks: ['ui-serif', 'Georgia', 'serif'],
+			fallbacks: ['ui-monospace', 'Consolas', 'monospace'],
 		},
 	],
 });
