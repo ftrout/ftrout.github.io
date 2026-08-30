@@ -9,7 +9,11 @@ import Header from '../components/Header.astro';
 import { titleTransitionName } from '../utils';
 
 type Adjacent = { slug: string; title: string };
-type Props = CollectionEntry<'blog'>['data'] & {
+type PostData = CollectionEntry<'blog'>['data'];
+// `author` and `tags` have schema defaults, so posts always carry them — but
+// pages that reuse this layout (e.g. /about) don't, hence Partial.
+type Props = Omit<PostData, 'author' | 'tags'> &
+	Partial<Pick<PostData, 'author' | 'tags'>> & {
 	slug?: string;
 	minutesRead?: string;
 	headings?: MarkdownHeading[];

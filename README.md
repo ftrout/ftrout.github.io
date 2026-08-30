@@ -1,63 +1,92 @@
-# Astro Starter Kit: Blog
+# Frank Trout's AI Blog
+
+Source for **[ftrout.github.io](https://ftrout.github.io)** — notes on building AI tooling for a
+security team: what breaks, what it costs, and what I would do differently.
+
+After 25 years in IT, most of it in cybersecurity, I write up what I run into building this stuff.
+These are notes on my own experience, not claims about how it ought to be done.
+
+## What's here
+
+Posts tend to cover the work that starts *after* the demo:
+
+- **Agent loops and harnesses** — who writes the loop, and the failures that never raise
+- **Tool use** — schemas that drift, results that come back wrong, calls that stop happening
+- **Evaluation** — measuring a prompt or an agent with a number instead of a vibe
+- **Context** — caching, clearing, compaction, and what "memory" actually turns out to be
+- **Cost and bounds** — what a feature costs to run, and which caps are actually enforced
+
+## Worked examples
+
+Posts that involve code ship with a runnable example alongside them — a single file, no cloud
+account required, no infrastructure to stand up.
+
+## How the site is built
+
+[Astro](https://astro.build) with Markdown/MDX content collections, statically generated and
+deployed to GitHub Pages by [a GitHub Actions workflow](.github/workflows/deploy.yml) on every
+push to `main`.
+
+- **Type** — Inter for UI and body, Newsreader for headlines, self-hosted via `astro:assets`
+- **Design** — token-driven: a fluid type scale, spacing rhythm, and layout widths each defined
+  once in [`src/styles/global.css`](src/styles/global.css)
+- **Code blocks** — Shiki highlighting with a click-to-copy button
+- **Reading experience** — a left-aligned reading column, auto-generated table of contents on
+  longer posts, reading-time estimates, and view transitions between the listing and the post
+- **Feeds and SEO** — RSS, sitemap, canonical URLs, Open Graph, and JSON-LD `BlogPosting`
+
+## Running it locally
+
+Requires Node 22.12 or newer.
 
 ```sh
-npm create astro@latest -- --template blog
+npm install
+npm run dev      # http://localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+| Command           | Action                                    |
+| :---------------- | :---------------------------------------- |
+| `npm install`     | Install dependencies                      |
+| `npm run dev`     | Start the dev server at `localhost:4321`  |
+| `npm run build`   | Build the production site to `./dist/`    |
+| `npm run preview` | Preview the production build locally      |
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
 ```text
-├── public/
+├── public/              # static assets served as-is
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+│   ├── assets/          # images processed at build time
+│   ├── components/      # header, footer, post card, meta
+│   ├── content/blog/    # the posts
+│   ├── layouts/         # the post layout
+│   ├── pages/           # routes, including the RSS feed
+│   └── styles/          # design tokens and base styles
+└── astro.config.mjs
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Adding a post
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Posts live in `src/content/blog/` as `YYYY-MM-DD-slug.md`. The date prefix
+keeps the directory sorted; it's stripped from the public URL, so the file above is served at
+`/blog/slug/`.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+```yaml
+---
+title: 'The post title'
+description: 'One sentence, used in listings and social cards.'
+pubDate: '2026-08-29'
+tags: ['agents', 'evaluation'] # optional
+heroImage: '../../assets/example.jpg' # optional
+updatedDate: '2026-09-02' # optional
+---
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+`author` defaults to my name. The schema is enforced at build time in
+[`src/content.config.ts`](src/content.config.ts), so a typo in frontmatter fails the build rather
+than the page.
 
 ## Credit
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Built from the [Astro blog starter](https://github.com/withastro/astro/tree/main/examples/blog),
+whose theme is based on the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).

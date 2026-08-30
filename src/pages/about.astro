@@ -10,15 +10,21 @@ import Layout from '../layouts/BlogPost.astro';
 	<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="120" height="120" />
 
 	<p>
-		Hi, I'm Frank Trout. I build and write about production-ready AI agents — the part of the
-		work that happens after the demo, when something actually has to ship, stay secure, and scale.
+		Hi, I'm Frank Trout. After 25 years in IT, most of it in cybersecurity, I build AI tooling
+		for a security team — triage helpers, evaluation harnesses, and the unglamorous plumbing
+		underneath. It has to be right, because somebody puts their name on the output.
 	</p>
 
 	<p>
-		This blog is where I collect field notes from that work: deployment and operational hygiene,
-		identity and least-privilege design, observability and evaluation, and the responsible-AI
-		practices that keep agentic systems trustworthy. Expect practical, opinionated write-ups
-		grounded in real platforms and real trade-offs.
+		This is where I write that up: agent loops and the failures that don't raise anything, tool
+		use, evaluation, context, and what any of it actually costs to run. Every post with code in
+		it ships with a single file you can run — one dependency, nothing to provision.
+	</p>
+
+	<p>
+		These are notes on what I ran into, not claims about how it ought to be done. I've picked
+		the wrong tool, kept the wrong abstraction too long, and shipped things I had to take
+		apart again. Where that happened I'd rather say so than tidy it up afterwards.
 	</p>
 
 	<p>
@@ -36,6 +42,4 @@ import Layout from '../layouts/BlogPost.astro';
 			margin: 0 0 var(--space-m) 0;
 		}
 	</style>
-
-	<!-- TODO: Personalize this further — add your background, current role, and contact links. -->
 </Layout>
