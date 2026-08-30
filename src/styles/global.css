@@ -1,13 +1,20 @@
 /*
-  Light, warm editorial theme inspired by Anthropic's engineering blog:
-  ivory background, warm near-black text, clay/coral accent, narrow
-  left-aligned reading column, generous whitespace.
+  Warm editorial theme: ivory ground, clay accent, and a reading column that
+  is LEFT-aligned inside one wide page container — so the wordmark, the hero
+  art, and the first character of body copy all share a single left edge on
+  every page.
+
+  Everything below is driven by the tokens in :root. Change a token, not a
+  rule: the type scale, spacing rhythm, corner radii, and layout widths are
+  each defined exactly once.
  */
 
 :root {
-	/* Clay / coral accent (Anthropic "book cloth") */
+	/* ---------- Color ---------- */
+	/* Clay / coral accent */
 	--accent: #c1623f;
 	--accent-hover: #a14a2c;
+	--accent-soft: rgba(193, 98, 63, 0.09);
 
 	/* Warm text + surfaces (rgb triples so rgba(var(--x), %) keeps working) */
 	--black: 26, 24, 20; /* headings */
@@ -16,27 +23,66 @@
 	--gray-light: 240, 237, 229; /* code / subtle surface */
 	--border: 226, 221, 210;
 
-	/* Page background */
 	--bg: #f7f4ee; /* warm ivory */
 	--bg-elev: #fffdf8; /* cards */
 
+	/* ---------- Type ---------- */
+	/* --font-inter / --font-newsreader are injected by astro:assets <Font>. */
+	--font-sans: var(--font-inter);
+	--font-display: var(--font-newsreader);
 	--font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', 'Fira Code', Consolas,
 		'Courier New', monospace;
 
-	/* Layout widths */
-	--width-content: 720px; /* readable prose column */
-	--width-wide: 960px; /* page container / listing */
+	/* Fluid scale — ~1.2 ratio on phones opening to ~1.25 on desktop. */
+	--step--2: clamp(0.7rem, 0.68rem + 0.09vw, 0.76rem);
+	--step--1: clamp(0.84rem, 0.81rem + 0.15vw, 0.93rem);
+	--step-0: clamp(1rem, 0.96rem + 0.2vw, 1.13rem);
+	--step-1: clamp(1.2rem, 1.13rem + 0.34vw, 1.41rem);
+	--step-2: clamp(1.44rem, 1.32rem + 0.59vw, 1.76rem);
+	--step-3: clamp(1.73rem, 1.54rem + 0.94vw, 2.2rem);
+	--step-4: clamp(2.07rem, 1.78rem + 1.44vw, 2.75rem);
+	--step-5: clamp(2.49rem, 2.04rem + 2.22vw, 3.43rem);
+
+	/* ---------- Space ---------- */
+	--space-3xs: 0.25rem;
+	--space-2xs: 0.5rem;
+	--space-xs: 0.75rem;
+	--space-s: 1rem;
+	--space-m: 1.5rem;
+	--space-l: 2rem;
+	--space-xl: 3rem;
+	--space-2xl: 4rem;
+	--space-3xl: 6rem;
+
+	/* ---------- Shape ---------- */
+	--radius-sm: 6px;
+	--radius: 10px;
+	--radius-lg: 14px;
 
 	--box-shadow:
 		0 1px 2px rgba(40, 33, 20, 0.06), 0 8px 24px rgba(40, 33, 20, 0.08);
+
+	/* ---------- Layout ---------- */
+	--width-content: 680px; /* reading column */
+	--width-wide: 1080px; /* page container: header, footer, hero art */
+	--gutter: clamp(1.25rem, 5vw, 2.5rem);
+	--header-height: 60px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 html {
 	scroll-behavior: smooth;
+	/* Keep sticky-header-obscured anchors clear of the bar. */
+	scroll-padding-top: calc(var(--header-height) + var(--space-m));
 }
 
 body {
-	font-family: var(--font-atkinson);
+	font-family: var(--font-sans);
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -44,51 +90,103 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 16px;
-	line-height: 1.7;
+	font-size: var(--step-0);
+	line-height: 1.65;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-synthesis-weight: none;
 }
+
+/* ---------- Layout primitives ---------- */
+
+/* One container width for every page, so nothing shifts between routes. */
+.container {
+	width: 100%;
+	max-width: var(--width-wide);
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+
 main {
-	width: var(--width-content);
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
+	width: 100%;
+	max-width: var(--width-wide);
+	margin-inline: auto;
+	padding: var(--space-xl) var(--gutter) var(--space-2xl);
 }
+
+/* The reading column. Left-aligned, never centered. */
+.column {
+	max-width: var(--width-content);
+}
+
+/* ---------- Type ---------- */
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0.5rem 0;
+	font-family: var(--font-display);
+	margin: 0 0 var(--space-2xs) 0;
 	color: rgb(var(--black));
-	line-height: 1.2;
-	letter-spacing: -0.01em;
-	font-weight: 700;
+	line-height: 1.15;
+	font-weight: 600;
+	text-wrap: balance;
 }
 h1 {
-	font-size: 2.75em;
+	font-size: var(--step-5);
 	letter-spacing: -0.02em;
 }
 h2 {
-	font-size: 1.85em;
-	margin-top: 1.6em;
+	font-size: var(--step-3);
+	letter-spacing: -0.01em;
+	margin-top: var(--space-xl);
 }
 h3 {
-	font-size: 1.45em;
-	margin-top: 1.2em;
+	font-size: var(--step-2);
+	margin-top: var(--space-l);
 }
 h4 {
-	font-size: 1.2em;
+	font-size: var(--step-1);
+	margin-top: var(--space-m);
 }
 h5 {
-	font-size: 1.05em;
+	font-size: var(--step-0);
 }
+
+h2[id],
+h3[id],
+h4[id],
+:target {
+	scroll-margin-top: calc(var(--header-height) + var(--space-m));
+}
+
+p {
+	margin-block: 0 var(--space-m);
+	text-wrap: pretty;
+}
+.prose p {
+	margin-bottom: var(--space-m);
+}
+.prose ul,
+.prose ol {
+	margin-block: 0 var(--space-m);
+	padding-left: 1.3em;
+}
+.prose li + li {
+	margin-top: var(--space-2xs);
+}
+.prose li::marker {
+	color: rgb(var(--gray));
+}
+
 strong,
 b {
-	font-weight: 700;
+	font-weight: 650;
 	color: rgb(var(--black));
 }
+
 a {
 	color: var(--accent);
 	text-underline-offset: 0.2em;
@@ -98,30 +196,55 @@ a {
 a:hover {
 	color: var(--accent-hover);
 }
-p {
-	margin-bottom: 1.2em;
+
+/* Visible keyboard focus everywhere, and only for keyboards. */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+	border-radius: var(--radius-sm);
 }
-.prose p {
-	margin-bottom: 1.5em;
+
+textarea,
+input {
+	font-family: inherit;
+	font-size: var(--step-0);
 }
 textarea {
 	width: 100%;
-	font-size: 16px;
 }
-input {
-	font-size: 16px;
+
+/* ---------- Media ---------- */
+
+img,
+video {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--radius);
 }
+
+figure {
+	margin: var(--space-l) 0;
+}
+figcaption {
+	margin-top: var(--space-2xs);
+	font-size: var(--step--1);
+	color: rgb(var(--gray));
+	line-height: 1.5;
+}
+
+/* ---------- Tables ---------- */
+
 table {
 	width: 100%;
 	border-collapse: collapse;
-	margin: 0 0 1.6em 0;
-	font-size: 0.95em;
+	margin: 0 0 var(--space-m) 0;
+	font-size: var(--step--1);
 	line-height: 1.5;
 }
 thead th {
 	background-color: rgb(var(--gray-light));
 	color: rgb(var(--black));
-	font-weight: 700;
+	font-weight: 650;
 	border-bottom: 2px solid rgb(var(--border));
 }
 th,
@@ -137,30 +260,27 @@ tbody tr:last-child td {
 tbody tr:nth-child(even) {
 	background-color: rgba(var(--gray-light), 0.45);
 }
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
 
-/* Inline code */
+/* ---------- Code ---------- */
+
 code {
 	font-family: var(--font-mono);
-	font-size: 0.85em;
+	font-size: 0.86em;
 	padding: 0.12em 0.38em;
 	background-color: rgb(var(--gray-light));
 	border: 1px solid rgb(var(--border));
-	border-radius: 5px;
+	border-radius: var(--radius-sm);
 	color: #8a3c22;
 }
 
-/* Code blocks (Shiki sets the background-color inline; we add light chrome) */
+/* Shiki sets the background-color inline; we add the surrounding chrome. */
 pre {
 	font-family: var(--font-mono);
-	font-size: 0.75em;
-	line-height: 1.55;
-	padding: 1.25em 1.4em;
-	border-radius: 10px;
+	font-size: 0.85em;
+	line-height: 1.6;
+	padding: 1.1em 1.25em;
+	margin: 0 0 var(--space-m) 0;
+	border-radius: var(--radius);
 	border: 1px solid rgb(var(--border));
 	overflow-x: auto;
 	-moz-tab-size: 4;
@@ -171,32 +291,62 @@ pre > code {
 	font-family: var(--font-mono);
 	tab-size: 4;
 }
+
+/* ---------- Blocks ---------- */
+
 blockquote {
-	border-left: 3px solid var(--accent);
-	padding: 0.1em 0 0.1em 1.2em;
-	margin: 0 0 1.5em 0;
-	font-size: 1.05em;
+	margin: var(--space-l) 0;
+	padding: var(--space-s) var(--space-m);
+	border-left: 2px solid var(--accent);
+	border-radius: 0 var(--radius) var(--radius) 0;
+	background: var(--accent-soft);
 	color: rgb(var(--gray-dark));
-	font-style: italic;
+	font-size: var(--step-0);
 }
+blockquote > :last-child {
+	margin-bottom: 0;
+}
+
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--border));
-	margin: 2em 0;
+	margin: var(--space-l) 0;
 }
+
 ::selection {
 	background: rgba(193, 98, 63, 0.18);
 }
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
+
+/* ---------- Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
 	}
-	main {
-		padding: 1.5em 1em;
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
 	}
-	h1 {
-		font-size: 2.1em;
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
 	}
+}
+
+/* ---------- Utilities ---------- */
+
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: var(--step--2);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: rgb(var(--gray));
+	margin: 0;
 }
 
 .sr-only {
@@ -207,12 +357,7 @@ hr {
 	height: 1px;
 	width: 1px;
 	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
 	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
 	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }

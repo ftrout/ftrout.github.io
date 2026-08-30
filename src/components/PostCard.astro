@@ -1,0 +1,113 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { getPostSlug, getReadingTime, titleTransitionName } from '../utils';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	/** Heading level for the title, so listings keep a sane document outline. */
+	headingLevel?: 2 | 3;
+}
+
+const { post, headingLevel = 2 } = Astro.props;
+const slug = getPostSlug(post.id);
+const Title = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<li class="row">
+	<p class="meta">
+		<FormattedDate date={post.data.pubDate} />
+		<span class="dot">·</span>
+		{getReadingTime(post.body)}
+	</p>
+	<Title class="title" transition:name={titleTransitionName(slug)}>
+		{/* The link stretches over the whole row via ::after, so the card is one
+		    click target while the surrounding text stays selectable. */}
+		<a href={`/blog/${slug}/`}>{post.data.title}</a>
+	</Title>
+	{post.data.description && <p class="description">{post.data.description}</p>}
+	{
+		post.data.tags.length > 0 && (
+			<ul class="tags">
+				{post.data.tags.map((tag) => (
+					<li>{tag}</li>
+				))}
+			</ul>
+		)
+	}
+</li>
+<style>
+	.row {
+		position: relative;
+		padding: var(--space-m) var(--space-s);
+		/* Pull the hover surface out past the text without moving the text. */
+		margin-inline: calc(var(--space-s) * -1);
+		border-radius: var(--radius);
+		border-top: 1px solid rgb(var(--border));
+		transition: background-color 0.15s ease;
+	}
+	.row:hover {
+		background-color: rgba(var(--gray-light), 0.6);
+	}
+
+	.meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5ch;
+		margin: 0 0 var(--space-3xs) 0;
+		color: rgb(var(--gray));
+		font-family: var(--font-mono);
+		font-size: var(--step--2);
+		letter-spacing: 0.02em;
+	}
+	.dot {
+		opacity: 0.6;
+	}
+
+	.title {
+		margin: 0 0 var(--space-3xs) 0;
+		font-size: var(--step-2);
+		line-height: 1.2;
+	}
+	.title a {
+		color: rgb(var(--black));
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+	.title a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+	}
+	.row:hover .title a {
+		color: var(--accent);
+	}
+	.title a:focus-visible {
+		outline-offset: 4px;
+	}
+
+	.description {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+		font-size: var(--step-0);
+		max-width: 62ch;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3xs);
+		list-style: none;
+		margin: var(--space-2xs) 0 0 0;
+		padding: 0;
+	}
+	.tags li {
+		font-family: var(--font-mono);
+		font-size: var(--step--2);
+		color: rgb(var(--gray));
+		padding: 0.15em 0.6em;
+		border: 1px solid rgb(var(--border));
+		border-radius: 999px;
+	}
+</style>

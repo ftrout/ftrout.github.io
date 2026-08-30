@@ -7,23 +7,12 @@ import Layout from '../layouts/BlogPost.astro';
 	description="A little about Frank Trout and this blog."
 	pubDate={new Date('June 06 2026')}
 >
-	<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="160" height="160" />
+	<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="120" height="120" />
 
 	<p>
 		Hi, I'm Frank Trout. I build and write about production-ready AI agents — the part of the
 		work that happens after the demo, when something actually has to ship, stay secure, and scale.
 	</p>
-
-	<style>
-		.avatar {
-			width: 160px;
-			height: 160px;
-			border-radius: 50%;
-			object-fit: cover;
-			border: 1px solid rgb(var(--border));
-			margin: 0 0 1.5rem 0;
-		}
-	</style>
 
 	<p>
 		This blog is where I collect field notes from that work: deployment and operational hygiene,
@@ -36,6 +25,17 @@ import Layout from '../layouts/BlogPost.astro';
 		You can find my code on <a href="https://github.com/ftrout">GitHub</a> or
 		<a href="/rss.xml">subscribe to the blog via RSS</a>. Thanks for reading.
 	</p>
+
+	<style>
+		.avatar {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 1px solid rgb(var(--border));
+			margin: 0 0 var(--space-m) 0;
+		}
+	</style>
 
 	<!-- TODO: Personalize this further — add your background, current role, and contact links. -->
 </Layout>

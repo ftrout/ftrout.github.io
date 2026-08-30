@@ -44,27 +44,27 @@ export default defineConfig({
 	},
 	integrations: [mdx(), sitemap()],
 	fonts: [
+		// UI, navigation, meta, and body copy.
 		{
-			provider: fontProviders.local(),
-			name: 'Atkinson',
-			cssVariable: '--font-atkinson',
-			fallbacks: ['sans-serif'],
-			options: {
-				variants: [
-					{
-						src: ['./src/assets/fonts/atkinson-regular.woff'],
-						weight: 400,
-						style: 'normal',
-						display: 'swap',
-					},
-					{
-						src: ['./src/assets/fonts/atkinson-bold.woff'],
-						weight: 700,
-						style: 'normal',
-						display: 'swap',
-					},
-				],
-			},
+			provider: fontProviders.google(),
+			name: 'Inter',
+			cssVariable: '--font-inter',
+			weights: [400, 500, 600, 700],
+			styles: ['normal'],
+			subsets: ['latin'],
+			display: 'swap',
+			fallbacks: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
+		},
+		// Display face for headlines — the editorial half of the pairing.
+		{
+			provider: fontProviders.google(),
+			name: 'Newsreader',
+			cssVariable: '--font-newsreader',
+			weights: [400, 500, 600],
+			styles: ['normal', 'italic'],
+			subsets: ['latin'],
+			display: 'swap',
+			fallbacks: ['ui-serif', 'Georgia', 'serif'],
 		},
 	],
 });

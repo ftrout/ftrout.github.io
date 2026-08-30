@@ -2,86 +2,86 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { getPostSlug } from '../../utils';
+import PostCard from '../../components/PostCard.astro';
+import { SITE_DESCRIPTION } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+// Group the (already newest-first) posts under year headings.
+const byYear: { year: number; posts: typeof posts }[] = [];
+for (const post of posts) {
+	const year = post.data.pubDate.getFullYear();
+	const last = byYear.at(-1);
+	if (last?.year === year) last.posts.push(post);
+	else byYear.push({ year, posts: [post] });
+}
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title="Blog" description={SITE_DESCRIPTION} />
-		<style>
-			.page-title {
-				margin-bottom: 1.5rem;
-			}
-			ul {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-			}
-			li {
-				padding: 2rem 0;
-				border-top: 1px solid rgb(var(--border));
-			}
-			li:last-child {
-				border-bottom: 1px solid rgb(var(--border));
-			}
-			.date {
-				margin: 0 0 0.4rem 0;
-				color: rgb(var(--gray));
-				font-family: var(--font-mono);
-				font-size: 0.8rem;
-				letter-spacing: 0.02em;
-			}
-			.title {
-				margin: 0 0 0.4rem 0;
-				font-size: 1.65rem;
-				line-height: 1.25;
-			}
-			.title a {
-				color: rgb(var(--black));
-				text-decoration: none;
-			}
-			.title a:hover {
-				color: var(--accent);
-			}
-			.description {
-				margin: 0;
-				color: rgb(var(--gray-dark));
-				font-size: 1.05rem;
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1 class="page-title">Blog</h1>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<p class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-								<h2 class="title">
-									<a href={`/blog/${getPostSlug(post.id)}/`}>{post.data.title}</a>
-								</h2>
-								{post.data.description && (
-									<p class="description">{post.data.description}</p>
-								)}
-							</li>
-						))
-					}
-				</ul>
-			</section>
+			<header class="page-head column">
+				<h1>Blog</h1>
+				<p class="count">
+					{posts.length}
+					{posts.length === 1 ? 'post' : 'posts'}
+				</p>
+			</header>
+
+			<div class="column">
+				{
+					byYear.map(({ year, posts: yearPosts }) => (
+						<section class="year">
+							<h2 class="eyebrow year-label">{year}</h2>
+							<ul class="posts">
+								{yearPosts.map((post) => (
+									<PostCard post={post} headingLevel={3} />
+								))}
+							</ul>
+						</section>
+					))
+				}
+			</div>
 		</main>
 		<Footer />
 	</body>
+
+	<style>
+		.page-head {
+			padding-block: var(--space-s) var(--space-l);
+		}
+		.page-head h1 {
+			margin: 0 0 var(--space-3xs) 0;
+		}
+		.count {
+			margin: 0;
+			font-family: var(--font-mono);
+			font-size: var(--step--2);
+			letter-spacing: 0.02em;
+			color: rgb(var(--gray));
+		}
+
+		.year + .year {
+			margin-top: var(--space-xl);
+		}
+		.year-label {
+			margin-bottom: var(--space-s);
+		}
+		.posts {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.posts :global(.row:first-child) {
+			border-top: none;
+		}
+	</style>
 </html>

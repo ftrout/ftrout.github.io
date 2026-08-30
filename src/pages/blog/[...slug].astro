@@ -28,6 +28,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
 <BlogPost
 	{...post.data}
+	slug={getPostSlug(post.id)}
 	minutesRead={remarkPluginFrontmatter.minutesRead}
 	headings={headings}
 	next={newer ? { slug: getPostSlug(newer.id), title: newer.data.title } : undefined}

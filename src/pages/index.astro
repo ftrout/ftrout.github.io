@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { getPostSlug } from '../utils';
 
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -20,38 +19,24 @@ const posts = (await getCollection('blog'))
 	<body>
 		<Header />
 		<main>
-			<section class="hero">
-				<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="96" height="96" />
+			<section class="hero column">
+				<img class="avatar" src="/profile.jpg" alt="Frank Trout" width="72" height="72" />
 				<h1>Building with AI, in production</h1>
 				<p class="lead">
 					Field notes from shipping, securing, and scaling AI agents — and the
 					responsible-AI practices that keep them trustworthy.
 				</p>
 				<p class="intro">
-					I'm Frank Trout. I've spent 25 years in IT, most recently in cybersecurity. 
-					Now I build AI, and this is where I write about it - the parts that work, 
+					I'm Frank Trout. I've spent 25 years in IT, most recently in cybersecurity.
+					Now I build AI, and this is where I write about it — the parts that work,
 					the parts that don't, and what I learn in between.
 				</p>
 			</section>
 
-			<section class="writing">
-				<h2 class="section-title">Latest writing</h2>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<p class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-								<h3 class="title">
-									<a href={`/blog/${getPostSlug(post.id)}/`}>{post.data.title}</a>
-								</h3>
-								{post.data.description && (
-									<p class="description">{post.data.description}</p>
-								)}
-							</li>
-						))
-					}
+			<section class="writing column">
+				<h2 class="eyebrow section-title">Latest writing</h2>
+				<ul class="posts">
+					{posts.map((post) => <PostCard post={post} headingLevel={3} />)}
 				</ul>
 				<p class="all-link"><a href="/blog">All posts →</a></p>
 			</section>
@@ -61,93 +46,61 @@ const posts = (await getCollection('blog'))
 
 	<style>
 		.hero {
-			padding: 2.5rem 0 3.5rem;
+			padding-block: var(--space-l) var(--space-2xl);
 		}
 		.avatar {
-			width: 96px;
-			height: 96px;
+			width: 72px;
+			height: 72px;
 			border-radius: 50%;
 			object-fit: cover;
 			border: 1px solid rgb(var(--border));
-			margin: 0 0 1.5rem 0;
+			margin: 0 0 var(--space-m) 0;
 		}
 		.hero h1 {
-			font-size: clamp(2.5rem, 6vw, 4rem);
-			line-height: 1.08;
-			letter-spacing: -0.03em;
-			margin: 0 0 1rem 0;
-			max-width: 14ch;
+			font-size: var(--step-5);
+			line-height: 1.05;
+			letter-spacing: -0.025em;
+			margin: 0 0 var(--space-s) 0;
+			max-width: 18ch;
 		}
 		.lead {
-			font-size: clamp(1.25rem, 2.5vw, 1.6rem);
-			line-height: 1.4;
+			font-size: var(--step-1);
+			line-height: 1.45;
 			color: rgb(var(--black));
-			max-width: 32ch;
-			margin: 0 0 1.5rem 0;
+			max-width: 46ch;
+			margin: 0 0 var(--space-m) 0;
 		}
 		.intro {
-			font-size: 1.1rem;
 			color: rgb(var(--gray));
-			max-width: 56ch;
+			max-width: 58ch;
 			margin: 0;
 		}
 
 		.writing {
 			border-top: 1px solid rgb(var(--border));
-			padding-top: 2.5rem;
+			padding-top: var(--space-l);
 		}
 		.section-title {
-			font-size: 0.85rem;
-			text-transform: uppercase;
-			letter-spacing: 0.08em;
-			color: rgb(var(--gray));
-			font-family: var(--font-mono);
-			margin: 0 0 1rem 0;
+			margin-bottom: var(--space-s);
 		}
-		ul {
+		.posts {
 			list-style: none;
 			margin: 0;
 			padding: 0;
 		}
-		li {
-			padding: 1.75rem 0;
-			border-top: 1px solid rgb(var(--border));
-		}
-		li:first-child {
+		.posts :global(.row:first-child) {
 			border-top: none;
-			padding-top: 0;
-		}
-		.date {
-			margin: 0 0 0.35rem 0;
-			color: rgb(var(--gray));
-			font-family: var(--font-mono);
-			font-size: 0.8rem;
-			letter-spacing: 0.02em;
-		}
-		.title {
-			margin: 0 0 0.35rem 0;
-			font-size: 1.5rem;
-			line-height: 1.25;
-		}
-		.title a {
-			color: rgb(var(--black));
-			text-decoration: none;
-		}
-		.title a:hover {
-			color: var(--accent);
-		}
-		.description {
-			margin: 0;
-			color: rgb(var(--gray-dark));
-			font-size: 1.05rem;
 		}
 		.all-link {
-			margin: 2rem 0 0 0;
+			margin: var(--space-l) 0 0 0;
 			font-family: var(--font-mono);
-			font-size: 0.9rem;
+			font-size: var(--step--1);
 		}
 		.all-link a {
 			text-decoration: none;
+		}
+		.all-link a:hover {
+			text-decoration: underline;
 		}
 	</style>
 </html>
