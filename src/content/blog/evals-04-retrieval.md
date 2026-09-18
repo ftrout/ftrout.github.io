@@ -5,7 +5,7 @@ pubDate: 2026-08-25
 tags: [llm-evals, rag, security]
 series: "Evals in Practice"
 seriesOrder: 4
-draft: true
+draft: false
 ---
 
 The first time I gave the triage agent access to our playbooks, I

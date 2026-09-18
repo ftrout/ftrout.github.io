@@ -3,7 +3,7 @@ title: "How to Use Claude Skills, and What I Put in Sixteen of Them"
 description: "A skill is a folder with a markdown file that Claude loads only when it is relevant. Here is how they work, how I packaged a SOC's workflows into them, and what I got wrong first."
 pubDate: 2026-09-18
 tags: [agents, security, skills]
-draft: true
+draft: false
 ---
 
 For months I kept pasting the same preamble into Claude. Pull the indicators

@@ -5,7 +5,7 @@ pubDate: 2026-08-11
 tags: [llm-evals, testing, security]
 series: "Evals in Practice"
 seriesOrder: 2
-draft: true
+draft: false
 ---
 
 Most of what a security agent produces is harder to grade than a unit

@@ -5,7 +5,7 @@ pubDate: 2026-08-04
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 1
-draft: true
+draft: false
 ---
 
 For about a year I built agents for a security team without evals. Not

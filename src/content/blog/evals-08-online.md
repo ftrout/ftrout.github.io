@@ -5,7 +5,7 @@ pubDate: 2026-09-17
 tags: [llm-evals, mlops, security]
 series: "Evals in Practice"
 seriesOrder: 8
-draft: true
+draft: false
 ---
 
 Everything in this series so far runs before a change ships. That is the

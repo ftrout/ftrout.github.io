@@ -5,7 +5,7 @@ pubDate: 2026-09-15
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 7
-draft: true
+draft: false
 ---
 
 Every eval so far assumed the input was produced by systems and people

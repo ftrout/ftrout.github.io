@@ -5,7 +5,7 @@ pubDate: 2026-08-18
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 3
-draft: true
+draft: false
 ---
 
 Code can grade a severity. It cannot grade whether an incident summary

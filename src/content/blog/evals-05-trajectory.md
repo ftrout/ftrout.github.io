@@ -5,7 +5,7 @@ pubDate: 2026-09-01
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 5
-draft: true
+draft: false
 ---
 
 The agent reached the right conclusion. The host was compromised and it

@@ -5,7 +5,7 @@ pubDate: 2026-09-08
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 6
-draft: true
+draft: false
 ---
 
 A trajectory eval will pass a run that called every tool in the right
