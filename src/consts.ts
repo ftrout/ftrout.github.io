@@ -7,7 +7,7 @@ export const SITE = {
   tagline: 'Notes from building AI systems that have to work in production.', // TODO: refine
   intro:
     'I design and ship retrieval systems, tool-calling agents, and the evaluation and operations work that keeps them honest. This site is where I write down what actually happened.', // TODO: refine
-  avatar: '', // optional: path under public/, e.g. '/avatar.jpg'. Empty shows a monogram.
+  avatar: '/avatar.jpg', // path under public/. Set to '' to show the monogram instead.
   description:
     'Frank Trout writes about building AI solutions: retrieval-augmented generation, agents, LLM evaluation, and the operational work that keeps them running.',
   author: 'Frank Trout',
