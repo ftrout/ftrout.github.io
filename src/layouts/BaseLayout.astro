@@ -12,19 +12,21 @@ interface Props {
   pubDate?: Date;
   updatedDate?: Date;
   tags?: string[];
+  /** Use the wider content column (article pages with a sidebar). */
+  wide?: boolean;
 }
 
-const props = Astro.props;
+const { wide = false, ...head } = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <Head {...props} />
+    <Head {...head} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
-    <main id="main" class="container">
+    <main id="main" class:list={['container', { wide }]}>
       <slot />
     </main>
     <Footer />

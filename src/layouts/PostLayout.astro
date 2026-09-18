@@ -1,16 +1,19 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
 import SeriesNav from '../components/SeriesNav.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 import { readingTime, type Post, type SeriesNeighbors } from '../utils/posts';
 
 interface Props {
   post: Post;
   neighbors: SeriesNeighbors | null;
+  headings: MarkdownHeading[];
 }
 
-const { post, neighbors } = Astro.props;
+const { post, neighbors, headings } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
 const minutes = readingTime(post.body);
 ---
@@ -23,35 +26,123 @@ const minutes = readingTime(post.body);
   pubDate={pubDate}
   updatedDate={updatedDate}
   tags={tags}
+  wide
 >
-  <article>
-    <header class="article-header">
-      <p class="eyebrow">Article</p>
-      <h1>{title}</h1>
-      <p class="lede">{description}</p>
-      <div class="meta">
-        <FormattedDate date={pubDate} />
-        {updatedDate && (
+  <div class="progress" aria-hidden="true" data-progress></div>
+  <div class="article-layout" id="top">
+    <article>
+      <header class="article-header">
+        <p class="eyebrow">{neighbors ? 'Series' : 'Article'}</p>
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <div class="meta">
+          <FormattedDate date={pubDate} />
+          {updatedDate && (
+            <span class="meta-item">
+              <span class="dot"></span>
+              <span>Updated <FormattedDate date={updatedDate} /></span>
+            </span>
+          )}
           <span class="meta-item">
             <span class="dot"></span>
-            <span>Updated <FormattedDate date={updatedDate} /></span>
+            <span>{minutes} min read</span>
           </span>
-        )}
-        <span class="meta-item">
-          <span class="dot"></span>
-          <span>{minutes} min read</span>
-        </span>
+        </div>
+        <TagList tags={tags} />
+        {heroImage && <img class="hero-image" src={heroImage} alt="" />}
+      </header>
+
+      <SeriesNav neighbors={neighbors} variant="banner" />
+
+      <div class="prose" data-prose>
+        <slot />
       </div>
-      <TagList tags={tags} />
-      {heroImage && <img class="hero-image" src={heroImage} alt="" />}
-    </header>
 
-    <SeriesNav neighbors={neighbors} variant="banner" />
+      <SeriesNav neighbors={neighbors} variant="full" />
+    </article>
 
-    <div class="prose">
-      <slot />
-    </div>
-
-    <SeriesNav neighbors={neighbors} variant="full" />
-  </article>
+    <aside>
+      <TableOfContents headings={headings} />
+    </aside>
+  </div>
 </BaseLayout>
+
+<script>
+  // Reading progress bar.
+  const bar = document.querySelector<HTMLElement>('[data-progress]');
+  if (bar) {
+    const update = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      bar.style.transform = `scaleX(${max > 0 ? Math.min(1, doc.scrollTop / max) : 0})`;
+    };
+    update();
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+  }
+
+  // Heading anchors.
+  document.querySelectorAll<HTMLElement>('[data-prose] h2[id], [data-prose] h3[id]').forEach((h) => {
+    const a = document.createElement('a');
+    a.className = 'heading-anchor';
+    a.href = `#${h.id}`;
+    a.textContent = '#';
+    a.setAttribute('aria-label', `Link to “${h.textContent?.trim()}”`);
+    h.append(a);
+  });
+
+  // Code block chrome: language label and copy button.
+  document.querySelectorAll<HTMLPreElement>('[data-prose] pre.astro-code').forEach((pre) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'code-block';
+    const header = document.createElement('div');
+    header.className = 'code-header';
+    const lang = document.createElement('span');
+    lang.textContent = pre.dataset.language && pre.dataset.language !== 'plaintext' ? pre.dataset.language : 'code';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-copy';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.innerText);
+        btn.textContent = 'Copied';
+        btn.dataset.copied = 'true';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          delete btn.dataset.copied;
+        }, 1600);
+      } catch {
+        btn.textContent = 'Failed';
+      }
+    });
+    header.append(lang, btn);
+    pre.replaceWith(wrap);
+    wrap.append(header, pre);
+  });
+
+  // Table of contents: highlight the section in view.
+  const toc = document.querySelector('[data-toc]');
+  if (toc) {
+    const links = [...toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
+    const byId = new Map(links.map((l) => [decodeURIComponent(l.hash.slice(1)), l]));
+    const targets = [...byId.keys()].map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    let current: HTMLAnchorElement | null = null;
+    const setCurrent = (id: string) => {
+      const link = byId.get(id);
+      if (!link || link === current) return;
+      current?.removeAttribute('aria-current');
+      link.setAttribute('aria-current', 'true');
+      current = link;
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setCurrent(visible[0].target.id);
+      },
+      { rootMargin: '-15% 0px -70% 0px', threshold: 0 },
+    );
+    targets.forEach((t) => observer.observe(t));
+    if (targets[0]) setCurrent(targets[0].id);
+  }
+</script>

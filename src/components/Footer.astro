@@ -1,8 +1,8 @@
 ---
-import { SITE, SOCIALS } from '../consts';
+import { NAV, SITE, SOCIALS } from '../consts';
 
 const year = new Date().getFullYear();
-const links = [
+const socials = [
   { label: 'GitHub', href: SOCIALS.github },
   { label: 'LinkedIn', href: SOCIALS.linkedin },
   { label: 'X', href: SOCIALS.x },
@@ -12,14 +12,37 @@ const links = [
 
 <footer class="site-footer">
   <div class="container">
-    <span>© {year} {SITE.author}. All rights reserved.</span>
-    <nav class="links" aria-label="Social">
-      {links.map((l) => (
-        <a href={l.href} rel="me noopener" target={l.href.startsWith('mailto:') ? undefined : '_blank'}>
-          {l.label}
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/">
+          <span class="mark" aria-hidden="true">{SITE.author.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()}</span>
+          <span>{SITE.title}</span>
         </a>
-      ))}
-      <a href="/rss.xml">RSS</a>
-    </nav>
+        <p>{SITE.description}</p>
+      </div>
+      <div class="footer-col">
+        <h2>Navigate</h2>
+        <ul>
+          {NAV.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+          <li><a href="/rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Connect</h2>
+        <ul>
+          {socials.map((l) => (
+            <li>
+              <a href={l.href} rel="me noopener" target={l.href.startsWith('mailto:') ? undefined : '_blank'}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {SITE.author}. All rights reserved.</span>
+      <span>Built with <a href="https://astro.build" rel="noopener" target="_blank">Astro</a>. Hosted on GitHub Pages.</span>
+    </div>
   </div>
 </footer>

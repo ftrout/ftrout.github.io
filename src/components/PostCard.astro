@@ -1,0 +1,25 @@
+---
+import { readingTime, type Post } from '../utils/posts';
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+---
+
+<li class="card post-card">
+  <a class="card-link" href={`/blog/${post.id}/`} aria-label={post.data.title}></a>
+  <div class="meta">
+    <FormattedDate date={post.data.pubDate} />
+    <span class="meta-item">
+      <span class="dot"></span>
+      <span>{readingTime(post.body)} min read</span>
+    </span>
+  </div>
+  <h3><a href={`/blog/${post.id}/`} tabindex="-1">{post.data.title}</a></h3>
+  <p>{post.data.description}</p>
+  <TagList tags={post.data.tags} />
+</li>
