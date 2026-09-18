@@ -4,13 +4,12 @@ import FeaturedPost from '../components/FeaturedPost.astro';
 import PostList from '../components/PostList.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE, SOCIALS } from '../consts';
-import { getAllSeries, getAllTags, getPosts } from '../utils/posts';
+import { getAllSeries, getPosts } from '../utils/posts';
 
 const posts = await getPosts();
 const [featured, ...rest] = posts;
 const recent = rest.slice(0, SITE.postsOnHome - 1);
 const series = getAllSeries(posts);
-const topics = getAllTags(posts).slice(0, 8);
 const initials = SITE.author
   .split(/\s+/)
   .map((w) => w[0])
@@ -27,7 +26,6 @@ const [leadIn, tailOut] = hasEmphasis ? SITE.tagline.split(emphasis) : [SITE.tag
 <BaseLayout title={SITE.title} description={SITE.description}>
   <section class="section hero">
     <div class="hero-head">
-      <p class="eyebrow">{SITE.role}</p>
       <h1>
         {leadIn}{hasEmphasis ? <em>{emphasis}</em> : null}{tailOut}
       </h1>
@@ -53,17 +51,6 @@ const [leadIn, tailOut] = hasEmphasis ? SITE.tagline.split(emphasis) : [SITE.tag
       </div>
     </div>
   </section>
-
-  {topics.length > 0 && (
-    <div class="topics">
-      <span class="label">Writing about</span>
-      <ul class="tag-list">
-        {topics.map((t) => (
-          <li><a class="tag" href={`/tags/${t.slug}/`}>{t.name}</a></li>
-        ))}
-      </ul>
-    </div>
-  )}
 
   {featured && (
     <section class="section">
