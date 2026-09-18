@@ -22,13 +22,13 @@ const initials = SITE.author
 <BaseLayout title={SITE.title} description={SITE.description}>
   <section class="section hero">
     <div>
-      <p class="eyebrow rise">{SITE.role}</p>
-      <h1 class="rise rise-2">
-        Hi, I'm <span class="gradient-text">{SITE.author}</span>.
+      <p class="eyebrow">{SITE.role}</p>
+      <h1>
+        Hi, I'm <em>{SITE.author}</em>.
       </h1>
-      <p class="lede rise rise-2">{SITE.tagline}</p>
-      <p class="intro rise rise-3">{SITE.intro}</p>
-      <div class="hero-actions rise rise-3">
+      <p class="lede">{SITE.tagline}</p>
+      <p class="intro">{SITE.intro}</p>
+      <div class="hero-actions">
         <a class="btn btn-primary" href="/blog/">Read the blog</a>
         <a class="btn" href="/about/">About me</a>
         {SOCIALS.github && (
@@ -39,7 +39,7 @@ const initials = SITE.author
         )}
       </div>
     </div>
-    <div class="hero-visual rise rise-3" aria-hidden="true">
+    <div class="hero-visual" aria-hidden="true">
       <div class="inner">
         {SITE.avatar ? <img src={SITE.avatar} alt="" /> : initials}
       </div>
