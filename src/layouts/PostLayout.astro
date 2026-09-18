@@ -1,0 +1,50 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import TagList from '../components/TagList.astro';
+import SeriesNav from '../components/SeriesNav.astro';
+import type { Post, SeriesNeighbors } from '../utils/posts';
+
+interface Props {
+  post: Post;
+  neighbors: SeriesNeighbors | null;
+}
+
+const { post, neighbors } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogType="article"
+  ogImage={heroImage}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  tags={tags}
+>
+  <article>
+    <header class="article-header">
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+      <div class="meta">
+        <FormattedDate date={pubDate} />
+        {updatedDate && (
+          <span>
+            Updated <FormattedDate date={updatedDate} />
+          </span>
+        )}
+        <TagList tags={tags} />
+      </div>
+      {heroImage && <img class="hero" src={heroImage} alt="" />}
+    </header>
+
+    <SeriesNav neighbors={neighbors} variant="banner" />
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <SeriesNav neighbors={neighbors} variant="full" />
+  </article>
+</BaseLayout>

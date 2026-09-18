@@ -1,0 +1,25 @@
+---
+import { SITE, SOCIALS } from '../consts';
+
+const year = new Date().getFullYear();
+const links = [
+  { label: 'GitHub', href: SOCIALS.github },
+  { label: 'LinkedIn', href: SOCIALS.linkedin },
+  { label: 'X', href: SOCIALS.x },
+  { label: 'Email', href: SOCIALS.email },
+].filter((l) => l.href);
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <span>© {year} {SITE.author}</span>
+    <nav class="links" aria-label="Social">
+      {links.map((l) => (
+        <a href={l.href} rel="me noopener" target={l.href.startsWith('mailto:') ? undefined : '_blank'}>
+          {l.label}
+        </a>
+      ))}
+      <a href="/rss.xml">RSS</a>
+    </nav>
+  </div>
+</footer>

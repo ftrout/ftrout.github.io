@@ -1,0 +1,50 @@
+---
+import type { SeriesNeighbors } from '../utils/posts';
+
+interface Props {
+  neighbors: SeriesNeighbors | null;
+  variant: 'banner' | 'full';
+}
+
+const { neighbors, variant } = Astro.props;
+---
+
+{neighbors && variant === 'banner' && (
+  <aside class="series-banner" aria-label="Series">
+    Part {neighbors.index} of {neighbors.total} in the series
+    <strong><a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a></strong>
+  </aside>
+)}
+
+{neighbors && variant === 'full' && (
+  <nav class="series-nav" aria-label="Series navigation">
+    <h2>
+      Series: <a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a>
+    </h2>
+    <ol>
+      {neighbors.parts.map((part, i) => (
+        <li aria-current={i + 1 === neighbors.index ? 'page' : undefined}>
+          {i + 1 === neighbors.index ? (
+            <span>{part.data.title}</span>
+          ) : (
+            <a href={`/blog/${part.id}/`}>{part.data.title}</a>
+          )}
+        </li>
+      ))}
+    </ol>
+    <div class="prev-next">
+      {neighbors.prev && (
+        <a class="prev" href={`/blog/${neighbors.prev.id}/`} rel="prev">
+          <span class="label">← Previous</span>
+          <span>{neighbors.prev.data.title}</span>
+        </a>
+      )}
+      {neighbors.next && (
+        <a class="next" href={`/blog/${neighbors.next.id}/`} rel="next">
+          <span class="label">Next →</span>
+          <span>{neighbors.next.data.title}</span>
+        </a>
+      )}
+    </div>
+  </nav>
+)}

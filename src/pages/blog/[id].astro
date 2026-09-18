@@ -1,0 +1,25 @@
+---
+import { render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPosts, getSeriesNeighbors, type Post, type SeriesNeighbors } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post, neighbors: getSeriesNeighbors(post, posts) },
+  }));
+}
+
+interface Props {
+  post: Post;
+  neighbors: SeriesNeighbors | null;
+}
+
+const { post, neighbors } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PostLayout post={post} neighbors={neighbors}>
+  <Content />
+</PostLayout>

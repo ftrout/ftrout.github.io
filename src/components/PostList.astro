@@ -1,0 +1,32 @@
+---
+import type { Post } from '../utils/posts';
+import { slugify } from '../utils/slug';
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="post-list">
+  {posts.map((post) => (
+    <li>
+      <h3 class="post-title">
+        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+      </h3>
+      <div class="meta">
+        <FormattedDate date={post.data.pubDate} />
+        {post.data.series && (
+          <span class="badge">
+            <a href={`/series/${slugify(post.data.series)}/`}>{post.data.series}</a>, part {post.data.seriesOrder}
+          </span>
+        )}
+      </div>
+      <p class="post-desc">{post.data.description}</p>
+      <TagList tags={post.data.tags} />
+    </li>
+  ))}
+</ul>

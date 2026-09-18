@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags, getPosts } from '../../utils/posts';
+
+const tags = getAllTags(await getPosts());
+---
+
+<BaseLayout title="Tags" description="Posts grouped by topic.">
+  <h1 class="page-title">Tags</h1>
+  <p class="lede">Browse by topic.</p>
+
+  <section class="section">
+    <ul class="tag-list" aria-label="All tags">
+      {tags.map((tag) => (
+        <li>
+          <a class="tag" href={`/tags/${tag.slug}/`}>
+            {tag.name}<span class="count">{tag.count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

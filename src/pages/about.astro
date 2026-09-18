@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SOCIALS } from '../consts';
+---
+
+<BaseLayout title="About" description={`About ${SITE.author} and this blog.`}>
+  <h1 class="page-title">About</h1>
+  <div class="prose">
+    <p>
+      I'm {SITE.author}. I build AI solutions for a living: retrieval systems,
+      agents that call tools, and the evaluation and operations work that turns
+      a promising demo into something a team can rely on.
+    </p>
+    <p>
+      This blog is where I write down what actually happened. Most posts start
+      as a note to my future self about a decision that looked obvious, went
+      sideways in production, and taught me something worth keeping. Expect
+      concrete details, small code samples, and opinions I reserve the right to
+      revise.
+    </p>
+    <h2>What you'll find here</h2>
+    <ul>
+      <li>Retrieval-augmented generation: chunking, indexing, reranking, and why the boring parts matter most.</li>
+      <li>Agents and tool use: designing tools, handling failure, keeping humans in the loop.</li>
+      <li>Evaluation: building eval harnesses before shipping features, and measuring what users care about.</li>
+      <li>MLOps for LLM systems: observability, cost, latency, and the ops work that keeps everything running.</li>
+    </ul>
+    <h2>Elsewhere</h2>
+    <p>
+      You can find my code on <a href={SOCIALS.github}>GitHub</a>.
+    </p>
+  </div>
+</BaseLayout>

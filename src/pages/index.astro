@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { SITE } from '../consts';
+import { getPosts } from '../utils/posts';
+
+const posts = (await getPosts()).slice(0, SITE.postsOnHome);
+---
+
+<BaseLayout title={SITE.title} description={SITE.description}>
+  <section class="section">
+    <h1 class="page-title">{SITE.title}</h1>
+    <p class="lede">{SITE.tagline}</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Latest writing</h2>
+    <PostList posts={posts} />
+    <p style="margin-top: 1.5rem;"><a href="/blog/">All posts →</a></p>
+  </section>
+</BaseLayout>

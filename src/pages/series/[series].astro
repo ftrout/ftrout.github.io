@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getAllSeries, getPosts, type SeriesInfo } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getAllSeries(posts).map((s) => ({
+    params: { series: s.slug },
+    props: { series: s },
+  }));
+}
+
+interface Props {
+  series: SeriesInfo;
+}
+
+const { series } = Astro.props;
+const count = series.parts.length;
+const noun = count === 1 ? 'part' : 'parts';
+---
+
+<BaseLayout title={series.name} description={`A ${count}-part series: ${series.name}.`}>
+  <h1 class="page-title">{series.name}</h1>
+  <p class="lede">A series in {count} {noun}, in reading order. <a href="/series/">All series</a></p>
+
+  <section class="section">
+    <PostList posts={series.parts} />
+  </section>
+</BaseLayout>
