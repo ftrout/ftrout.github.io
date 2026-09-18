@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAllTags, getPosts } from '../../utils/posts';
+import { tagHue } from '../../utils/slug';
 
 const tags = getAllTags(await getPosts());
 ---
@@ -15,7 +16,7 @@ const tags = getAllTags(await getPosts());
   <ul class="tag-list large" aria-label="All tags">
     {tags.map((tag) => (
       <li>
-        <a class="tag" href={`/tags/${tag.slug}/`}>
+        <a class={`tag tag-c${tagHue(tag.slug)}`} href={`/tags/${tag.slug}/`}>
           {tag.name}<span class="count">{tag.count}</span>
         </a>
       </li>

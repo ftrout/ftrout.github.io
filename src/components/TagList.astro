@@ -1,5 +1,5 @@
 ---
-import { slugify } from '../utils/slug';
+import { slugify, tagHue } from '../utils/slug';
 
 interface Props {
   tags: string[];
@@ -12,7 +12,7 @@ const { tags } = Astro.props;
   <ul class="tag-list" aria-label="Tags">
     {tags.map((tag) => (
       <li>
-        <a class="tag" href={`/tags/${slugify(tag)}/`}>{tag}</a>
+        <a class={`tag tag-c${tagHue(slugify(tag))}`} href={`/tags/${slugify(tag)}/`}>{tag}</a>
       </li>
     ))}
   </ul>

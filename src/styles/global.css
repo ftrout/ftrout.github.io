@@ -564,23 +564,51 @@ main.container {
   display: inline-flex;
   align-items: center;
   gap: 0.3em;
-  border: 1px solid transparent;
+  --tag-h: 218;
+  --tag-l: 86;
+  --tag-dl: 20;
+  border: 1px solid hsl(var(--tag-h) 26% calc((var(--tag-l) - 9) * 1%));
   font-size: var(--text-xs);
   font-weight: 500;
   line-height: 1;
   padding: 0.45em 0.75em;
   border-radius: 999px;
-  color: var(--fg-2);
-  background: var(--bg-subtle);
-  transition: color 140ms var(--ease), background-color 140ms var(--ease);
+  color: hsl(var(--tag-h) 58% 24%);
+  background: hsl(var(--tag-h) 30% calc(var(--tag-l) * 1%));
+  transition: color 140ms var(--ease), background-color 140ms var(--ease),
+    border-color 140ms var(--ease);
 }
+.tag-c0 { --tag-h: 8; --tag-l: 86; --tag-dl: 20; }  /* terracotta */
+.tag-c1 { --tag-h: 34; --tag-l: 83; --tag-dl: 17; }  /* tobacco */
+.tag-c2 { --tag-h: 80; --tag-l: 80; --tag-dl: 16; }  /* olive */
+.tag-c3 { --tag-h: 160; --tag-l: 82; --tag-dl: 16; }  /* deep green */
+.tag-c4 { --tag-h: 186; --tag-l: 82; --tag-dl: 16; }  /* deep teal */
+.tag-c5 { --tag-h: 218; --tag-l: 86; --tag-dl: 20; }  /* steel blue */
+.tag-c6 { --tag-h: 258; --tag-l: 87; --tag-dl: 21; }  /* indigo */
+.tag-c7 { --tag-h: 298; --tag-l: 86; --tag-dl: 20; }  /* aubergine */
 .tag:hover {
-  color: var(--accent);
-  background: var(--accent-soft);
+  color: hsl(var(--tag-h) 62% 18%);
+  background: hsl(var(--tag-h) 34% calc((var(--tag-l) - 5) * 1%));
+  border-color: hsl(var(--tag-h) 30% calc((var(--tag-l) - 17) * 1%));
 }
 .tag .count {
-  color: var(--muted);
+  color: inherit;
+  margin-left: 0.15em;
+  padding-left: 0.5em;
+  border-left: 1px solid color-mix(in srgb, currentColor 32%, transparent);
   font-variant-numeric: tabular-nums;
+}
+@media (prefers-color-scheme: dark) {
+  .tag {
+    color: hsl(var(--tag-h) 46% 72%);
+    background: hsl(var(--tag-h) 24% calc(var(--tag-dl) * 1%));
+    border-color: hsl(var(--tag-h) 22% calc((var(--tag-dl) + 12) * 1%));
+  }
+  .tag:hover {
+    color: hsl(var(--tag-h) 52% 80%);
+    background: hsl(var(--tag-h) 26% calc((var(--tag-dl) + 5) * 1%));
+    border-color: hsl(var(--tag-h) 26% calc((var(--tag-dl) + 22) * 1%));
+  }
 }
 .tag-list.large .tag {
   font-size: var(--text-sm);
@@ -615,9 +643,6 @@ main.container {
 @media (prefers-color-scheme: dark) {
   .card {
     border-color: var(--rule-strong);
-  }
-  .tag {
-    border-color: var(--rule);
   }
 }
 
