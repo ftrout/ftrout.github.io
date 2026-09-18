@@ -1,11 +1,6 @@
 ---
 import { NAV, SITE, SOCIALS } from '../consts';
 
-interface Props {
-  wide?: boolean;
-}
-
-const { wide = false } = Astro.props;
 const year = new Date().getFullYear();
 const socials = [
   { label: 'GitHub', href: SOCIALS.github },
@@ -16,7 +11,7 @@ const socials = [
 ---
 
 <footer class="site-footer">
-  <div class:list={['container', { wide }]}>
+  <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <a class="brand" href="/">

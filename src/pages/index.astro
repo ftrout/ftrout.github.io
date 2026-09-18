@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
-import PostCard from '../components/PostCard.astro';
+import PostList from '../components/PostList.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE, SOCIALS } from '../consts';
 import { getAllSeries, getAllTags, getPosts } from '../utils/posts';
@@ -77,9 +77,7 @@ const [leadIn, tailOut] = hasEmphasis ? SITE.tagline.split(emphasis) : [SITE.tag
         <h2>More writing</h2>
         <a class="more" href="/blog/">View all posts →</a>
       </div>
-      <ul class="post-grid">
-        {recent.map((post) => <PostCard post={post} />)}
-      </ul>
+      <PostList posts={recent} />
     </section>
   )}
 
