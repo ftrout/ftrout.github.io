@@ -25,10 +25,10 @@ const { wide = false, ...head } = Astro.props;
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header />
+    <Header wide={wide} />
     <main id="main" class:list={['container', { wide }]}>
       <slot />
     </main>
-    <Footer />
+    <Footer wide={wide} />
   </body>
 </html>

@@ -27,7 +27,7 @@ const { posts } = Astro.props;
           {post.data.series && (
             <span class="meta-item">
               <span class="dot"></span>
-              <a href={`/series/${slugify(post.data.series)}/`}>{post.data.series}</a>, part {post.data.seriesOrder}
+              <span><a href={`/series/${slugify(post.data.series)}/`}>{post.data.series}</a>, part {post.data.seriesOrder}</span>
             </span>
           )}
           <span class="meta-item">

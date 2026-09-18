@@ -5,6 +5,8 @@ export const SITE = {
   title: 'Frank Trout',
   role: 'AI engineer', // TODO: refine (shown above your name on the home page)
   tagline: 'Notes from building AI systems that have to work in production.', // TODO: refine
+  /** Phrase inside the tagline rendered in the accent colour. Must appear in tagline. */
+  taglineEmphasis: 'work in production',
   intro:
     'I design and ship retrieval systems, tool-calling agents, and the evaluation and operations work that keeps them honest. This site is where I write down what actually happened.', // TODO: refine
   avatar: '/avatar.jpg', // path under public/. Set to '' to show the monogram instead.

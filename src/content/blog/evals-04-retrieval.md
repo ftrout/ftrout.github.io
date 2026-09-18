@@ -1,7 +1,7 @@
 ---
 title: "Retrieval Evals: Measure the Search Before You Judge the Answer"
 description: "When an agent answers from playbooks and past incidents, most bad answers are bad retrieval in disguise. Recall, MRR, and precision tell you which half of the pipeline to fix."
-pubDate: 2026-10-15
+pubDate: 2026-08-25
 tags: [llm-evals, rag, security]
 series: "Evals in Practice"
 seriesOrder: 4

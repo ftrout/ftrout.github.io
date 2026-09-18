@@ -1,7 +1,7 @@
 ---
 title: "LLM-as-Judge Without Fooling Yourself"
 description: "A model can grade incident summaries at scale, but only after you have checked its grades against your analysts'. The rubric, the calibration step, and the code."
-pubDate: 2026-10-08
+pubDate: 2026-08-18
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 3

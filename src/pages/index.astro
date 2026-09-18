@@ -17,13 +17,29 @@ const initials = SITE.author
   .join('')
   .slice(0, 2)
   .toUpperCase();
+
+// Split the tagline so one phrase can carry the accent colour.
+const emphasis = SITE.taglineEmphasis;
+const hasEmphasis = Boolean(emphasis) && SITE.tagline.includes(emphasis);
+const [leadIn, tailOut] = hasEmphasis ? SITE.tagline.split(emphasis) : [SITE.tagline, ''];
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description}>
   <section class="section hero">
-    <div>
+    <div class="hero-head">
       <p class="eyebrow">{SITE.role}</p>
-      <h1>{SITE.tagline}</h1>
+      <h1>
+        {leadIn}{hasEmphasis ? <em>{emphasis}</em> : null}{tailOut}
+      </h1>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="inner">
+        {SITE.avatar ? <img src={SITE.avatar} alt="" /> : initials}
+      </div>
+    </div>
+
+    <div class="hero-body">
       <p class="intro">{SITE.intro}</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="/blog/">Read the blog</a>
@@ -34,11 +50,6 @@ const initials = SITE.author
             GitHub
           </a>
         )}
-      </div>
-    </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="inner">
-        {SITE.avatar ? <img src={SITE.avatar} alt="" /> : initials}
       </div>
     </div>
   </section>
@@ -63,10 +74,7 @@ const initials = SITE.author
   {recent.length > 0 && (
     <section class="section">
       <div class="section-header">
-        <div>
-          <p class="eyebrow">Recent</p>
-          <h2>More writing</h2>
-        </div>
+        <h2>More writing</h2>
         <a class="more" href="/blog/">View all posts →</a>
       </div>
       <ul class="post-grid">
@@ -78,10 +86,7 @@ const initials = SITE.author
   {series.length > 0 && (
     <section class="section">
       <div class="section-header">
-        <div>
-          <p class="eyebrow">Series</p>
-          <h2>Read in order</h2>
-        </div>
+        <h2>Read in order</h2>
         <a class="more" href="/series/">All series →</a>
       </div>
       <div class="series-spotlight">

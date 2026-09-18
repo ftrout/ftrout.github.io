@@ -1,7 +1,7 @@
 ---
 title: "Outcome Evals: Did the Agent Actually Finish the Job?"
 description: "For containment tasks, the transcript is not the grade. Run the agent against sandboxed EDR and ticketing systems, then inspect them. Fixtures, state checks, and the failures they caught."
-pubDate: 2026-10-29
+pubDate: 2026-09-08
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 6

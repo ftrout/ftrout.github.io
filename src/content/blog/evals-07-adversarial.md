@@ -1,7 +1,7 @@
 ---
 title: "Adversarial Evals: When the Input Was Written by the Attacker"
 description: "A security agent reads phishing emails, hostile logs, and requests it should refuse. Cases for each, with mirror cases so the fix is not an agent that refuses everything."
-pubDate: 2026-11-05
+pubDate: 2026-09-15
 tags: [llm-evals, agents, security]
 series: "Evals in Practice"
 seriesOrder: 7
