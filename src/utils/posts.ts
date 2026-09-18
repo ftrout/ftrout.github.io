@@ -98,3 +98,9 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 export function formatDate(date: Date): string {
   return dateFormatter.format(date);
 }
+
+/** Approximate reading time in whole minutes, based on 225 words per minute. */
+export function readingTime(text: string | undefined): number {
+  const words = (text ?? '').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 225));
+}

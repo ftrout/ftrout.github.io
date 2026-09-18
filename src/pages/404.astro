@@ -3,9 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Page not found" description="The page you were looking for does not exist.">
-  <h1 class="page-title">Page not found</h1>
-  <p class="lede">That link doesn't go anywhere. It may have moved, or it never existed.</p>
-  <p style="margin-top: 1.5rem;">
-    <a href="/">Back to the home page</a> or <a href="/blog/">browse all posts</a>.
-  </p>
+  <header class="page-header">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lede">That link doesn't go anywhere. It may have moved, or it never existed.</p>
+  </header>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="/">Go home</a>
+    <a class="btn" href="/blog/">Browse all posts</a>
+  </div>
 </BaseLayout>

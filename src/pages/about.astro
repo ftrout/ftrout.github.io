@@ -4,12 +4,17 @@ import { SITE, SOCIALS } from '../consts';
 ---
 
 <BaseLayout title="About" description={`About ${SITE.author} and this blog.`}>
-  <h1 class="page-title">About</h1>
+  <header class="page-header">
+    <p class="eyebrow">About</p>
+    <h1>{SITE.author}</h1>
+    <p class="lede">{SITE.role}. {SITE.tagline}</p>
+  </header>
+
   <div class="prose">
     <p>
-      I'm {SITE.author}. I build AI solutions for a living: retrieval systems,
-      agents that call tools, and the evaluation and operations work that turns
-      a promising demo into something a team can rely on.
+      I build AI solutions for a living: retrieval systems, agents that call
+      tools, and the evaluation and operations work that turns a promising demo
+      into something a team can rely on.
     </p>
     <p>
       This blog is where I write down what actually happened. Most posts start

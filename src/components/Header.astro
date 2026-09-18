@@ -3,11 +3,20 @@ import { NAV, SITE } from '../consts';
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(href);
+const initials = SITE.author
+  .split(/\s+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
 ---
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/">{SITE.title}</a>
+    <a class="brand" href="/" aria-label={`${SITE.title} home`}>
+      <span class="mark" aria-hidden="true">{initials}</span>
+      <span>{SITE.title}</span>
+    </a>
     <nav class="site-nav" aria-label="Primary">
       {NAV.map((item) => (
         <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>

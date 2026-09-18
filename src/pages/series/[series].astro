@@ -21,10 +21,11 @@ const noun = count === 1 ? 'part' : 'parts';
 ---
 
 <BaseLayout title={series.name} description={`A ${count}-part series: ${series.name}.`}>
-  <h1 class="page-title">{series.name}</h1>
-  <p class="lede">A series in {count} {noun}, in reading order. <a href="/series/">All series</a></p>
+  <header class="page-header">
+    <p class="eyebrow">Series</p>
+    <h1>{series.name}</h1>
+    <p class="lede">{count} {noun}, in reading order. <a href="/series/">Browse all series</a></p>
+  </header>
 
-  <section class="section">
-    <PostList posts={series.parts} />
-  </section>
+  <PostList posts={series.parts} />
 </BaseLayout>

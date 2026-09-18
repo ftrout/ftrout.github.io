@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
 import SeriesNav from '../components/SeriesNav.astro';
-import type { Post, SeriesNeighbors } from '../utils/posts';
+import { readingTime, type Post, type SeriesNeighbors } from '../utils/posts';
 
 interface Props {
   post: Post;
@@ -12,6 +12,7 @@ interface Props {
 
 const { post, neighbors } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+const minutes = readingTime(post.body);
 ---
 
 <BaseLayout
@@ -25,18 +26,24 @@ const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
 >
   <article>
     <header class="article-header">
+      <p class="eyebrow">Article</p>
       <h1>{title}</h1>
       <p class="lede">{description}</p>
       <div class="meta">
         <FormattedDate date={pubDate} />
         {updatedDate && (
-          <span>
-            Updated <FormattedDate date={updatedDate} />
+          <span class="meta-item">
+            <span class="dot"></span>
+            <span>Updated <FormattedDate date={updatedDate} /></span>
           </span>
         )}
-        <TagList tags={tags} />
+        <span class="meta-item">
+          <span class="dot"></span>
+          <span>{minutes} min read</span>
+        </span>
       </div>
-      {heroImage && <img class="hero" src={heroImage} alt="" />}
+      <TagList tags={tags} />
+      {heroImage && <img class="hero-image" src={heroImage} alt="" />}
     </header>
 
     <SeriesNav neighbors={neighbors} variant="banner" />

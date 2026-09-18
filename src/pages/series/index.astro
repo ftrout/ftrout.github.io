@@ -7,25 +7,26 @@ const series = getAllSeries(await getPosts());
 ---
 
 <BaseLayout title="Series" description="Multi-part posts, in reading order.">
-  <h1 class="page-title">Series</h1>
-  <p class="lede">Longer topics, split into parts you can read in order.</p>
+  <header class="page-header">
+    <p class="eyebrow">Browse</p>
+    <h1>Series</h1>
+    <p class="lede">Longer topics, split into parts you can read in order.</p>
+  </header>
 
-  <section class="section">
-    <ul class="series-grid">
-      {series.map((s) => (
-        <li>
-          <h2><a href={`/series/${s.slug}/`}>{s.name}</a></h2>
-          <span class="badge">{s.parts.length} {s.parts.length === 1 ? 'part' : 'parts'}</span>
-          <ol>
-            {s.parts.map((part) => (
-              <li>
-                <a href={`/blog/${part.id}/`}>{part.data.title}</a>
-                <span class="badge"> · <FormattedDate date={part.data.pubDate} /></span>
-              </li>
-            ))}
-          </ol>
-        </li>
-      ))}
-    </ul>
-  </section>
+  <ul class="series-grid">
+    {series.map((s) => (
+      <li class="series-card">
+        <h2><a href={`/series/${s.slug}/`}>{s.name}</a></h2>
+        <span class="badge">{s.parts.length} {s.parts.length === 1 ? 'part' : 'parts'}</span>
+        <ol>
+          {s.parts.map((part) => (
+            <li>
+              <a href={`/blog/${part.id}/`}>{part.data.title}</a>
+              <span> · </span><FormattedDate date={part.data.pubDate} />
+            </li>
+          ))}
+        </ol>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>

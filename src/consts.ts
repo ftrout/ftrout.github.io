@@ -3,6 +3,7 @@
  */
 export const SITE = {
   title: 'Frank Trout',
+  role: 'AI engineer', // TODO: refine (shown above your name on the home page)
   tagline: 'Notes from building AI systems that have to work in production.', // TODO: refine
   description:
     'Frank Trout writes about building AI solutions: retrieval-augmented generation, agents, LLM evaluation, and the operational work that keeps them running.',

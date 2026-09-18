@@ -11,7 +11,7 @@ const { neighbors, variant } = Astro.props;
 
 {neighbors && variant === 'banner' && (
   <aside class="series-banner" aria-label="Series">
-    Part {neighbors.index} of {neighbors.total} in the series
+    <span>Part {neighbors.index} of {neighbors.total} in</span>
     <strong><a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a></strong>
   </aside>
 )}
@@ -19,7 +19,8 @@ const { neighbors, variant } = Astro.props;
 {neighbors && variant === 'full' && (
   <nav class="series-nav" aria-label="Series navigation">
     <h2>
-      Series: <a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a>
+      <span class="eyebrow">Series</span>
+      <a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a>
     </h2>
     <ol>
       {neighbors.parts.map((part, i) => (

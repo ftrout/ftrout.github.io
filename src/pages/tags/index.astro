@@ -6,18 +6,19 @@ const tags = getAllTags(await getPosts());
 ---
 
 <BaseLayout title="Tags" description="Posts grouped by topic.">
-  <h1 class="page-title">Tags</h1>
-  <p class="lede">Browse by topic.</p>
+  <header class="page-header">
+    <p class="eyebrow">Browse</p>
+    <h1>Tags</h1>
+    <p class="lede">Every topic I've written about, with the number of posts in each.</p>
+  </header>
 
-  <section class="section">
-    <ul class="tag-list" aria-label="All tags">
-      {tags.map((tag) => (
-        <li>
-          <a class="tag" href={`/tags/${tag.slug}/`}>
-            {tag.name}<span class="count">{tag.count}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-  </section>
+  <ul class="tag-list large" aria-label="All tags">
+    {tags.map((tag) => (
+      <li>
+        <a class="tag" href={`/tags/${tag.slug}/`}>
+          {tag.name}<span class="count">{tag.count}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>

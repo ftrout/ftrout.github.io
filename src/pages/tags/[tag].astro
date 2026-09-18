@@ -22,10 +22,11 @@ const noun = count === 1 ? 'post' : 'posts';
 ---
 
 <BaseLayout title={`Tagged ${name}`} description={`${count} ${noun} tagged ${name}.`}>
-  <h1 class="page-title">Tagged “{name}”</h1>
-  <p class="lede">{count} {noun}. <a href="/tags/">All tags</a></p>
+  <header class="page-header">
+    <p class="eyebrow">Tag</p>
+    <h1>{name}</h1>
+    <p class="lede">{count} {noun}. <a href="/tags/">Browse all tags</a></p>
+  </header>
 
-  <section class="section">
-    <PostList posts={posts} />
-  </section>
+  <PostList posts={posts} />
 </BaseLayout>

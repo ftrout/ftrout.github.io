@@ -14,12 +14,15 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
 ---
 
 <BaseLayout title="Blog" description="All posts, newest first.">
-  <h1 class="page-title">Blog</h1>
-  <p class="lede">Everything I've written, newest first.</p>
+  <header class="page-header">
+    <p class="eyebrow">Writing</p>
+    <h1>Blog</h1>
+    <p class="lede">Everything I've written, newest first.</p>
+  </header>
 
   <section class="section">
     {years.map((year) => (
-      <div>
+      <div class="year-block">
         <h2 class="year-heading">{year}</h2>
         <PostList posts={byYear.get(year)!} />
       </div>
