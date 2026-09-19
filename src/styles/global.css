@@ -27,7 +27,7 @@
     Menlo, Consolas, monospace;
 
   --measure: 44rem;   /* prose reading column */
-  --page: 64rem;      /* the one shell width: header, main, footer */
+  --page: 68rem;      /* the one shell width: header, main, footer */
   --radius-sm: 6px;
   --radius: 10px;
   --radius-lg: 14px;
@@ -891,7 +891,7 @@ main.container {
    ========================================================================== */
 .article-layout {
   display: grid;
-  /* 61rem of content = 41rem prose + 5rem gap + 15rem sidebar */
+  /* 65rem of content = 45rem prose + 5rem gap + 15rem sidebar */
   grid-template-columns: minmax(0, 1fr) 15rem;
   column-gap: 5rem;
   row-gap: 0;
