@@ -5,10 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# Nothing by default. Each job requests exactly what it needs.
+permissions: {}
 
 concurrency:
   group: pages
@@ -17,21 +15,36 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # This job runs `npm install`, which executes third-party install scripts.
+    # It gets read access only: it cannot mint an OIDC token or publish.
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        # Actions are pinned to full commit hashes, not tags, so a moved or
+        # compromised tag cannot change what runs here. Dependabot keeps them
+        # current and updates the version comments.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Don't leave the token in .git/config where install scripts can read it.
+          persist-credentials: false
       - name: Install, build, and upload site
-        uses: withastro/action@v6
-        # Defaults: Node 24, package manager detected from package-lock.json,
-        # output uploaded from dist/.
+        uses: withastro/action@3eafd002e65cc31b4f0eae0bb05450d521562247 # v6.1.3
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Only this job can publish, and only from main (enforced by the
+    # github-pages environment's deployment branch policy).
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

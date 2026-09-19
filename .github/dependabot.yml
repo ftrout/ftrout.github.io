@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # Keeps the hash-pinned actions in deploy.yml current, including the
+  # version comments beside each hash.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Wait a week before proposing a newly published version. Malicious
+    # releases are usually caught and pulled within days. This applies to
+    # routine version updates only; security updates are not delayed.
+    cooldown:
+      default-days: 7
+    groups:
+      astro:
+        patterns: ["astro", "@astrojs/*"]
+      dev-dependencies:
+        dependency-type: development
+    open-pull-requests-limit: 5
