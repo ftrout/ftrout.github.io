@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SeriesParts from '../../components/SeriesParts.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SERIES_INFO } from '../../consts';
+import { getAllSeries, getAllTags, getPosts, postsWithTag } from '../../utils/posts';
+import { slugify, tagHue } from '../../utils/slug';
+
+const posts = await getPosts();
+const series = getAllSeries(posts);
+const tags = getAllTags(posts).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+
+// Within a topic, a series collapses to one entry so the page does not relist it.
+type Entry =
+  | { kind: 'post'; href: string; title: string; date: Date }
+  | { kind: 'series'; href: string; title: string; parts: number };
+// A lone part is listed as itself; collapsed series follow the dated posts.
+function entriesFor(slug: string): Entry[] {
+  const tagged = postsWithTag(posts, slug);
+  const perSeries = new Map<string, number>();
+  for (const p of tagged) if (p.data.series) perSeries.set(p.data.series, (perSeries.get(p.data.series) ?? 0) + 1);
+  const collapsed = (p: (typeof tagged)[number]) => !!p.data.series && perSeries.get(p.data.series)! > 1;
+  const single: Entry[] = tagged
+    .filter((p) => !collapsed(p))
+    .map((p) => ({ kind: 'post', href: `/blog/${p.id}/`, title: p.data.title, date: p.data.pubDate }));
+  const grouped: Entry[] = [...perSeries]
+    .filter(([, n]) => n > 1)
+    .map(([name, parts]) => ({ kind: 'series', href: `/series/${slugify(name)}/`, title: name, parts }));
+  return [...single, ...grouped];
+}
+---
+
+<BaseLayout title="Topics" description="Everything on the blog, grouped by series and by topic.">
+  <header class="page-header">
+    <h1>Topics</h1>
+    <p class="lede">The series are meant to be read in order. The topics collect everything else.</p>
+  </header>
+
+  {series.length > 0 && (
+    <section class="topics-section" aria-labelledby="series-heading">
+      <div class="section-header">
+        <h2 id="series-heading">Series</h2>
+      </div>
+      {series.map((s) => (
+        <div class="series-block">
+          <h3><a href={`/series/${s.slug}/`}>{s.name}</a></h3>
+          {SERIES_INFO[s.name] && <p class="series-desc">{SERIES_INFO[s.name].description}</p>}
+          <SeriesParts parts={s.parts} />
+        </div>
+      ))}
+    </section>
+  )}
+
+  <section class="topics-section" aria-labelledby="topics-heading">
+    <div class="section-header">
+      <h2 id="topics-heading">By topic</h2>
+    </div>
+    <ul class="topic-index" aria-label="Jump to a topic">
+      {tags.map((t) => (
+        <li>
+          <a class={`tag tag-c${tagHue(t.slug)}`} href={`#${t.slug}`}>
+            {t.name}<span class="count">{t.count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="topic-list">
+      {tags.map((t) => (
+        <div class="topic" id={t.slug}>
+          <h3>
+            <a class={`tag-dot tag-c${tagHue(t.slug)}`} href={`/tags/${t.slug}/`}>{t.name}</a>
+            <span class="count">{t.count}</span>
+          </h3>
+          <ul class="topic-posts">
+            {entriesFor(t.slug).map((e) => (
+              <li>
+                <a href={e.href}>{e.title}</a>
+                {e.kind === 'post' ? (
+                  <FormattedDate date={e.date} style="short" />
+                ) : (
+                  <span class="series-count">Series · {e.parts} {e.parts === 1 ? 'part' : 'parts'}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

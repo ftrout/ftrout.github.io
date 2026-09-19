@@ -2,7 +2,7 @@
 title: "Trajectory Evals: Grade the Path, Not Just the Destination"
 description: "A response agent can reach the right call by a dangerous route. Assertions over the transcript catch skipped lookups, wrong arguments, and containment without confirmation."
 pubDate: 2026-09-01
-tags: [llm-evals, agents, security]
+tags: [llm-evals, agents]
 series: "Evals in Practice"
 seriesOrder: 5
 draft: false

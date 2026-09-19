@@ -1,44 +1,19 @@
 ---
 import type { SeriesNeighbors } from '../utils/posts';
+import SeriesParts from './SeriesParts.astro';
 
 interface Props {
   neighbors: SeriesNeighbors | null;
-  variant: 'banner' | 'full';
 }
 
-const { neighbors, variant } = Astro.props;
+const { neighbors } = Astro.props;
 ---
 
-{neighbors && variant === 'banner' && (
-  <aside class="series-banner" aria-label="Series">
-    <span>Part {neighbors.index} of {neighbors.total} in</span>
-    <strong><a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a></strong>
-    <span class="parts" aria-hidden="true">
-      {neighbors.parts.map((_, i) => (
-        <span class:list={{ done: i < neighbors.index }}></span>
-      ))}
-    </span>
-  </aside>
-)}
-
-{neighbors && variant === 'full' && (
+{neighbors && (
   <nav class="series-nav" aria-label="Series navigation">
-    <h2>
-      <span class="eyebrow">Series</span>
-      <br />
-      <a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a>
-    </h2>
-    <ol>
-      {neighbors.parts.map((part, i) => (
-        <li aria-current={i + 1 === neighbors.index ? 'page' : undefined}>
-          {i + 1 === neighbors.index ? (
-            <span>{part.data.title}</span>
-          ) : (
-            <a href={`/blog/${part.id}/`}>{part.data.title}</a>
-          )}
-        </li>
-      ))}
-    </ol>
+    <p class="kicker">Series · Part {neighbors.index} of {neighbors.total}</p>
+    <h2><a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a></h2>
+    <SeriesParts parts={neighbors.parts} current={neighbors.index} />
     <div class="prev-next">
       {neighbors.prev && (
         <a class="prev" href={`/blog/${neighbors.prev.id}/`} rel="prev">

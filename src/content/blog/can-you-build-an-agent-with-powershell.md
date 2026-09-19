@@ -2,7 +2,7 @@
 title: "Can You Build an Agent With PowerShell?"
 description: "Yes, in about eighty lines. An agent is a loop, a model call, some tools and a transcript. Here is each piece in PowerShell, plus the two bugs that cost me an afternoon."
 pubDate: 2026-09-16
-tags: [agents, security]
+tags: [agents, powershell]
 draft: false
 ---
 

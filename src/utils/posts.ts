@@ -88,15 +88,23 @@ function bySeriesOrder(a: Post, b: Post): number {
   return (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0);
 }
 
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
+const fullDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
   timeZone: 'UTC',
 });
+const shortDate = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
 
-export function formatDate(date: Date): string {
-  return dateFormatter.format(date);
+export type DateStyle = 'full' | 'short';
+
+/** 'full' is "Sep 18, 2026"; 'short' drops the year for lists grouped by year. */
+export function formatDate(date: Date, style: DateStyle = 'full'): string {
+  return (style === 'short' ? shortDate : fullDate).format(date);
 }
 
 /** Approximate reading time in whole minutes, based on 225 words per minute. */

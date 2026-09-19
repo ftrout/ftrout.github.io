@@ -1,15 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPosts } from '../utils/posts';
+
+const recent = (await getPosts()).slice(0, 3);
 ---
 
 <BaseLayout title="Page not found" description="The page you were looking for does not exist.">
-  <header class="page-header">
-    <p class="eyebrow">404</p>
-    <h1>Page not found</h1>
-    <p class="lede">That link doesn't go anywhere. It may have moved, or it never existed.</p>
-  </header>
-  <div class="hero-actions">
-    <a class="btn btn-primary" href="/">Go home</a>
-    <a class="btn" href="/blog/">Browse all posts</a>
+  <div class="not-found">
+    <header class="page-header">
+      <p class="kicker">404</p>
+      <h1>Nothing at this address</h1>
+      <p class="lede">
+        The link may be old, or mistyped. Try <a href="/blog/">all writing</a>,
+        <a href="/topics/">topics</a>, or one of the recent posts below.
+      </p>
+    </header>
+
+    <section class="recent" aria-labelledby="recent-heading">
+      <div class="section-header">
+        <h2 id="recent-heading">Recent posts</h2>
+        <a class="link-arrow" href="/">Home →</a>
+      </div>
+      <PostList posts={recent} />
+    </section>
   </div>
 </BaseLayout>

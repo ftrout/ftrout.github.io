@@ -22,7 +22,7 @@ const minutes = readingTime(post.body);
   title={title}
   description={description}
   ogType="article"
-  ogImage={heroImage}
+  ogImage={`/og/${post.id}.png`}
   pubDate={pubDate}
   updatedDate={updatedDate}
   tags={tags}
@@ -31,33 +31,29 @@ const minutes = readingTime(post.body);
   <div class="article-layout" id="top">
     <article>
       <header class="article-header">
-        <p class="eyebrow">{neighbors ? 'Series' : 'Article'}</p>
+        {neighbors && (
+          <p class="kicker">
+            <a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a> · Part {neighbors.index} of {neighbors.total}
+          </p>
+        )}
         <h1>{title}</h1>
         <p class="lede">{description}</p>
         <div class="meta">
-          <FormattedDate date={pubDate} />
-          {updatedDate && (
-            <span class="meta-item">
-              <span class="dot"></span>
-              <span>Updated <FormattedDate date={updatedDate} /></span>
-            </span>
-          )}
-          <span class="meta-item">
-            <span class="dot"></span>
+          <div class="meta-row">
+            <FormattedDate date={pubDate} />
+            {updatedDate && <span>Updated <FormattedDate date={updatedDate} /></span>}
             <span>{minutes} min read</span>
-          </span>
+            {tags.length > 0 && <span class="meta-tags"><TagList tags={tags} /></span>}
+          </div>
         </div>
-        <TagList tags={tags} />
         {heroImage && <img class="hero-image" src={heroImage} alt="" />}
       </header>
-
-      <SeriesNav neighbors={neighbors} variant="banner" />
 
       <div class="prose" data-prose>
         <slot />
       </div>
 
-      <SeriesNav neighbors={neighbors} variant="full" />
+      <SeriesNav neighbors={neighbors} />
     </article>
 
     <aside>
@@ -90,18 +86,25 @@ const minutes = readingTime(post.body);
     h.append(a);
   });
 
-  // Code block chrome: language label and copy button.
+  // Code blocks: language label, copy button, and a fade when a line runs off the edge.
+  const blocks: HTMLElement[] = [];
   document.querySelectorAll<HTMLPreElement>('[data-prose] pre.astro-code').forEach((pre) => {
     const wrap = document.createElement('div');
     wrap.className = 'code-block';
-    const header = document.createElement('div');
-    header.className = 'code-header';
-    const lang = document.createElement('span');
-    lang.textContent = pre.dataset.language && pre.dataset.language !== 'plaintext' ? pre.dataset.language : 'code';
+    const tools = document.createElement('div');
+    tools.className = 'code-tools';
+    const language = pre.dataset.language;
+    if (language && !['plaintext', 'text', 'txt'].includes(language)) {
+      const lang = document.createElement('span');
+      lang.className = 'code-lang';
+      lang.textContent = language;
+      tools.append(lang);
+    }
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
     btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy code');
     btn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(pre.innerText);
@@ -115,9 +118,34 @@ const minutes = readingTime(post.body);
         btn.textContent = 'Failed';
       }
     });
-    header.append(lang, btn);
+    tools.append(btn);
     pre.replaceWith(wrap);
-    wrap.append(header, pre);
+    wrap.append(tools, pre);
+    pre.addEventListener(
+      'scroll',
+      () => wrap.classList.toggle('at-end', pre.scrollLeft + pre.clientWidth >= pre.scrollWidth - 2),
+      { passive: true },
+    );
+    blocks.push(wrap);
+  });
+  const measure = () =>
+    blocks.forEach((wrap) => {
+      const pre = wrap.querySelector('pre')!;
+      wrap.classList.toggle('is-overflowing', pre.scrollWidth > pre.clientWidth + 1);
+    });
+  measure();
+  addEventListener('resize', measure);
+  document.fonts?.ready.then(measure);
+
+  // Tables scroll inside their own box instead of widening the page.
+  document.querySelectorAll<HTMLTableElement>('[data-prose] table').forEach((table) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'table-wrap';
+    wrap.tabIndex = 0;
+    wrap.setAttribute('role', 'region');
+    wrap.setAttribute('aria-label', 'Table');
+    table.replaceWith(wrap);
+    wrap.append(table);
   });
 
   // Table of contents: highlight the section in view.

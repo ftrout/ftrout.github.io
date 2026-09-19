@@ -3,16 +3,19 @@ import { slugify, tagHue } from '../utils/slug';
 
 interface Props {
   tags: string[];
+  /** Slug of a tag to leave out, e.g. on that tag's own page. */
+  hide?: string;
 }
 
-const { tags } = Astro.props;
+const { tags, hide } = Astro.props;
+const shown = tags.filter((t) => slugify(t) !== hide);
 ---
 
-{tags.length > 0 && (
-  <ul class="tag-list" aria-label="Tags">
-    {tags.map((tag) => (
+{shown.length > 0 && (
+  <ul class="tag-dots" aria-label="Tags">
+    {shown.map((tag) => (
       <li>
-        <a class={`tag tag-c${tagHue(slugify(tag))}`} href={`/tags/${slugify(tag)}/`}>{tag}</a>
+        <a class={`tag-dot tag-c${tagHue(slugify(tag))}`} href={`/tags/${slugify(tag)}/`}>{tag}</a>
       </li>
     ))}
   </ul>

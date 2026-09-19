@@ -1,8 +1,8 @@
 ---
-title: "I Ignored Evals for a Year. Now I Can't Ship Without Them"
+title: "I Ignored Evals for a Year. Now I Can’t Ship Without Them"
 description: "How I went from treating evals as an academic chore to refusing to merge a security agent change without them, and a map of what the word actually covers."
 pubDate: 2026-08-04
-tags: [llm-evals, agents, security]
+tags: [llm-evals, agents]
 series: "Evals in Practice"
 seriesOrder: 1
 draft: false

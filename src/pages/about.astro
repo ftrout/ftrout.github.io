@@ -3,31 +3,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, SOCIALS } from '../consts';
 ---
 
-<BaseLayout title="About" description={`About ${SITE.author} and this blog.`}>
-  <header class="page-header">
-    <p class="eyebrow">About</p>
-    <h1>{SITE.author}</h1>
-    <p class="lede">{SITE.role}. {SITE.tagline}</p>
-  </header>
+<BaseLayout title="About" description={`${SITE.author}: ${SITE.role}.`}>
+  <div class="prose-page">
+    <header class="page-header about-header">
+      {SITE.avatar && (
+        <div class="about-photo">
+          <img src={SITE.avatar} alt={`Portrait of ${SITE.author}`} width="640" height="640" />
+        </div>
+      )}
+      <div>
+        <h1>{SITE.author}</h1>
+        <p class="lede">{SITE.role}.</p>
+      </div>
+    </header>
 
-  <div class="prose">
-    <p>{SITE.intro}</p>
-    <p>
-      Most posts start as a note to my future self about a decision that looked
-      obvious, went sideways in production, and taught me something worth
-      keeping. Expect concrete details, small code samples, and opinions I
-      reserve the right to revise.
-    </p>
-    <h2>What you'll find here</h2>
-    <ul>
-      <li>Retrieval-augmented generation: chunking, indexing, reranking, and why the boring parts matter most.</li>
-      <li>Agents and tool use: designing tools, handling failure, keeping humans in the loop.</li>
-      <li>Evaluation: building eval harnesses before shipping features, and measuring what users care about.</li>
-      <li>MLOps for LLM systems: observability, cost, latency, and the ops work that keeps everything running.</li>
-    </ul>
-    <h2>Elsewhere</h2>
-    <p>
-      You can find my code on <a href={SOCIALS.github}>GitHub</a>.
-    </p>
+    <div class="prose">
+      <p>
+        I build agentic systems for a security operations team. The work sits
+        where a model's output turns into a decision someone acts on: triaging
+        alerts, supporting incident response, and analysing reported phishing.
+      </p>
+      <p>
+        Security is an unforgiving place to put a language model. Inputs are
+        adversarial by design, a confident wrong answer costs analyst time or
+        worse, and "it looked good in the demo" is not a standard anyone will
+        accept. Most of what I have learned is about the engineering around the
+        model: evaluations, deterministic steps where they belong, and knowing
+        when an agent is the wrong tool.
+      </p>
+
+      <h2>What I write about</h2>
+      <ul>
+        <li><strong>Evaluation.</strong> How to tell whether a system is getting better, from code-graded checks to grading production traffic. The <a href="/series/evals-in-practice/">Evals in Practice</a> series is the long version.</li>
+        <li><strong>Agents and workflows.</strong> When to let the model choose the next step, and when that choice belongs in code.</li>
+        <li><strong>Practical tooling.</strong> The small, specific pieces that make AI useful to analysts day to day.</li>
+      </ul>
+      <p>
+        Posts start as notes on something that went differently in production
+        than it did on paper. Code samples are illustrations, trimmed to the
+        idea, not drop-in software.
+      </p>
+
+      <h2>Elsewhere</h2>
+      <p>
+        Code is on <a href={SOCIALS.github} rel="me noopener">GitHub</a>, including
+        <a class="nowrap" href="https://github.com/ftrout/secops-claude-skills">secops-claude-skills</a>,
+        a set of Claude skills for security work. New posts arrive by
+        <a href="/rss.xml">RSS</a>. If something here is wrong, I would rather
+        know: open an issue on the
+        <a href="https://github.com/ftrout/ftrout.github.io/issues">site's repository</a>.
+      </p>
+    </div>
   </div>
 </BaseLayout>

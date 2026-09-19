@@ -31,14 +31,13 @@ const twitterHandle = SOCIALS.x ? SOCIALS.x.replace(/^https?:\/\/(www\.)?x\.com\
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1a1714" media="(prefers-color-scheme: dark)" />
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <meta name="author" content={SITE.author} />
 <link rel="canonical" href={canonical} />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="alternate" type="application/rss+xml" title={SITE.title} href={new URL('rss.xml', Astro.site)} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <meta name="generator" content={Astro.generator} />
@@ -50,6 +49,9 @@ const twitterHandle = SOCIALS.x ? SOCIALS.x.replace(/^https?:\/\/(www\.)?x\.com\
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
 {isArticle && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
 {isArticle && updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
 {isArticle && <meta property="article:author" content={SITE.author} />}

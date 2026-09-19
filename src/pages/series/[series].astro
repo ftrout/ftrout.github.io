@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
+import { SERIES_INFO } from '../../consts';
 import { getAllSeries, getPosts, type SeriesInfo } from '../../utils/posts';
 
 export async function getStaticPaths() {
@@ -17,15 +18,15 @@ interface Props {
 
 const { series } = Astro.props;
 const count = series.parts.length;
-const noun = count === 1 ? 'part' : 'parts';
+const intro = SERIES_INFO[series.name]?.description ?? `A ${count}-part series, in reading order.`;
 ---
 
-<BaseLayout title={series.name} description={`A ${count}-part series: ${series.name}.`}>
+<BaseLayout title={series.name} description={intro}>
   <header class="page-header">
-    <p class="eyebrow">Series</p>
+    <p class="kicker">Series · {count} {count === 1 ? 'part' : 'parts'}</p>
     <h1>{series.name}</h1>
-    <p class="lede">{count} {noun}, in reading order. <a href="/series/">Browse all series</a></p>
+    <p class="lede">{intro}</p>
   </header>
 
-  <PostList posts={series.parts} />
+  <PostList posts={series.parts} level="h2" numbered showSeries={false} />
 </BaseLayout>

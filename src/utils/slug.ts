@@ -16,9 +16,9 @@ const PINNED_TAG_HUES: Record<string, number> = {
   skills: 0,
   rag: 1,
   'llm-evals': 2,
-  retrieval: 3,
+  powershell: 3,
   testing: 4,
-  security: 5,
+  architecture: 5,
   agents: 6,
   mlops: 7,
 };

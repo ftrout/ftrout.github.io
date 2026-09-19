@@ -13,19 +13,16 @@ for (const post of posts) {
 const years = [...byYear.keys()].sort((a, b) => b - a);
 ---
 
-<BaseLayout title="Blog" description="All posts, newest first.">
+<BaseLayout title="Writing" description="Everything Frank Trout has written, newest first.">
   <header class="page-header">
-    <p class="eyebrow">Writing</p>
-    <h1>Blog</h1>
-    <p class="lede">Everything I've written, newest first.</p>
+    <h1>Writing</h1>
+    <p class="lede">Everything I've written, newest first. Browse by <a href="/topics/">topic or series</a> instead.</p>
   </header>
 
-  <section class="section">
-    {years.map((year) => (
-      <div class="year-block">
-        <h2 class="year-heading">{year}</h2>
-        <PostList posts={byYear.get(year)!} />
-      </div>
-    ))}
-  </section>
+  {years.map((year) => (
+    <section class="year-group" aria-labelledby={`y${year}`}>
+      <h2 class="year-heading" id={`y${year}`}>{year}</h2>
+      <PostList posts={byYear.get(year)!} dateStyle="short" />
+    </section>
+  ))}
 </BaseLayout>

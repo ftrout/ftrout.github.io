@@ -2,31 +2,33 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
 import { getAllTags, getPosts, postsWithTag, type Post } from '../../utils/posts';
+import { tagHue } from '../../utils/slug';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
   return getAllTags(posts).map((tag) => ({
     params: { tag: tag.slug },
-    props: { name: tag.name, posts: postsWithTag(posts, tag.slug) },
+    props: { name: tag.name, slug: tag.slug, posts: postsWithTag(posts, tag.slug) },
   }));
 }
 
 interface Props {
   name: string;
+  slug: string;
   posts: Post[];
 }
 
-const { name, posts } = Astro.props;
+const { name, slug, posts } = Astro.props;
 const count = posts.length;
 const noun = count === 1 ? 'post' : 'posts';
 ---
 
-<BaseLayout title={`Tagged ${name}`} description={`${count} ${noun} tagged ${name}.`}>
+<BaseLayout title={`Posts about ${name}`} description={`${count} ${noun} about ${name}.`}>
   <header class="page-header">
-    <p class="eyebrow">Tag</p>
-    <h1>{name}</h1>
-    <p class="lede">{count} {noun}. <a href="/tags/">Browse all tags</a></p>
+    <p class="kicker"><a href="/topics/">Topics</a></p>
+    <h1><span class={`tag-dot tag-c${tagHue(slug)}`}>{name}</span></h1>
+    <p class="lede">{count} {noun}, newest first.</p>
   </header>
 
-  <PostList posts={posts} />
+  <PostList posts={posts} level="h2" hideTag={slug} />
 </BaseLayout>

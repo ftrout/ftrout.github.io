@@ -1,47 +1,28 @@
 ---
-import { NAV, SITE, SOCIALS } from '../consts';
+import { SITE, SOCIALS } from '../consts';
 
 const year = new Date().getFullYear();
-const socials = [
-  { label: 'GitHub', href: SOCIALS.github },
-  { label: 'LinkedIn', href: SOCIALS.linkedin },
-  { label: 'X', href: SOCIALS.x },
-  { label: 'Email', href: SOCIALS.email },
+const links = [
+  { label: 'GitHub', href: SOCIALS.github, me: true },
+  { label: 'LinkedIn', href: SOCIALS.linkedin, me: true },
+  { label: 'X', href: SOCIALS.x, me: true },
+  { label: 'Email', href: SOCIALS.email, me: true },
+  { label: 'RSS', href: '/rss.xml', me: false },
 ].filter((l) => l.href);
 ---
 
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="/">
-          <span>{SITE.title}</span>
-        </a>
-        <p>{SITE.description}</p>
-      </div>
-      <div class="footer-col">
-        <h2>Navigate</h2>
-        <ul>
-          {NAV.map((item) => (
-            <li><a href={item.href}>{item.label}</a></li>
-          ))}
-          <li><a href="/rss.xml">RSS feed</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Connect</h2>
-        <ul>
-          {socials.map((l) => (
-            <li>
-              <a href={l.href} rel="me noopener" target={l.href.startsWith('mailto:') ? undefined : '_blank'}>{l.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div class="footer-id">
+      <strong>{SITE.author}</strong>
+      <p>{SITE.footerNote} © {year}</p>
     </div>
-    <div class="footer-bottom">
-      <span>© {year} {SITE.author}. All rights reserved.</span>
-      <span>Built with <a href="https://astro.build" rel="noopener" target="_blank">Astro</a>. Hosted on GitHub Pages.</span>
-    </div>
+    <ul class="footer-links">
+      {links.map((l) => (
+        <li>
+          <a href={l.href} rel={l.me ? 'me noopener' : undefined}>{l.label}</a>
+        </li>
+      ))}
+    </ul>
   </div>
 </footer>

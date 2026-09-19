@@ -1,8 +1,8 @@
 ---
-title: "Agents Aren't Always the Answer"
+title: "Agents Aren’t Always the Answer"
 description: "Our phishing triage agent kept skipping the authentication check. The fix was not a better prompt. It was deleting the agent and writing a pipeline that calls the model twice."
 pubDate: 2026-09-05
-tags: [agents, mlops, security]
+tags: [agents, architecture]
 draft: false
 ---
 

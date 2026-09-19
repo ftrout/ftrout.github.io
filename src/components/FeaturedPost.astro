@@ -9,26 +9,22 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const { title, description, pubDate, series, seriesOrder, tags } = post.data;
 ---
 
-<article class="card featured">
-  <a class="card-link" href={`/blog/${post.id}/`} aria-label={post.data.title}></a>
-  <p class="eyebrow">Latest post</p>
-  <h3><a href={`/blog/${post.id}/`} tabindex="-1">{post.data.title}</a></h3>
-  <p>{post.data.description}</p>
+<article class="lead-post">
+  <p class="kicker">Latest</p>
+  <h2 class="lead-title"><a href={`/blog/${post.id}/`}>{title}</a></h2>
+  <p class="lead-desc">{description}</p>
   <div class="meta">
-    <FormattedDate date={post.data.pubDate} />
-    {post.data.series && (
-      <span class="meta-item">
-        <span class="dot"></span>
-        <span><a href={`/series/${slugify(post.data.series)}/`}>{post.data.series}</a>, part {post.data.seriesOrder}</span>
-      </span>
-    )}
-    <span class="meta-item">
-      <span class="dot"></span>
+    <div class="meta-row">
+      <FormattedDate date={pubDate} />
       <span>{readingTime(post.body)} min read</span>
-    </span>
+      {series && (
+        <span><a href={`/series/${slugify(series)}/`}>{series}</a>, part {seriesOrder}</span>
+      )}
+      {tags.length > 0 && <span class="meta-tags"><TagList tags={tags} /></span>}
+    </div>
   </div>
-  <TagList tags={post.data.tags} />
-  <span class="read-more" aria-hidden="true">Read the post →</span>
+  <a class="link-arrow" href={`/blog/${post.id}/`} aria-hidden="true" tabindex="-1">Read the post →</a>
 </article>

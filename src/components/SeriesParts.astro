@@ -1,0 +1,25 @@
+---
+import type { Post } from '../utils/posts';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  parts: Post[];
+  /** 1-based index of the part being read, if any. */
+  current?: number;
+}
+
+const { parts, current } = Astro.props;
+---
+
+<ol class="parts-list">
+  {parts.map((part, i) => (
+    <li aria-current={i + 1 === current ? 'step' : undefined}>
+      {i + 1 === current ? (
+        <span>{part.data.title}</span>
+      ) : (
+        <a href={`/blog/${part.id}/`}>{part.data.title}</a>
+      )}
+      <FormattedDate date={part.data.pubDate} style="short" />
+    </li>
+  ))}
+</ol>

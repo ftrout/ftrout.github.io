@@ -2,17 +2,15 @@
 import { NAV, SITE } from '../consts';
 
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => path === href || path.startsWith(href);
+const isCurrent = (match: readonly string[]) => match.some((m) => path.startsWith(m));
 ---
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/" aria-label={`${SITE.title} home`}>
-      <span>{SITE.title}</span>
-    </a>
+    <a class="brand" href="/" aria-label={`${SITE.title}, home`}>{SITE.title}</a>
     <nav class="site-nav" aria-label="Primary">
       {NAV.map((item) => (
-        <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+        <a href={item.href} aria-current={isCurrent(item.match) ? 'page' : undefined}>
           {item.label}
         </a>
       ))}

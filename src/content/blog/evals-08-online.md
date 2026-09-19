@@ -2,7 +2,7 @@
 title: "Online Evals: Grading Production While It Runs"
 description: "Offline evals go stale the day you ship. Sample real triages, grade them, watch the trend, and feed every analyst-confirmed miss back into the case set."
 pubDate: 2026-09-17
-tags: [llm-evals, mlops, security]
+tags: [llm-evals, mlops]
 series: "Evals in Practice"
 seriesOrder: 8
 draft: false

@@ -2,7 +2,7 @@
 title: "Code-Graded Evals: The Cheapest Signal You Will Ever Get"
 description: "When the right answer is a severity, a category, a set of indicators, or a structure, grade it with code. A pytest harness that runs in seconds and never argues with itself."
 pubDate: 2026-08-11
-tags: [llm-evals, testing, security]
+tags: [llm-evals, testing]
 series: "Evals in Practice"
 seriesOrder: 2
 draft: false

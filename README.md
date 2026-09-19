@@ -39,7 +39,7 @@ an eight-part series on measuring AI systems that make security decisions.
   [secops-claude-skills](https://github.com/ftrout/secops-claude-skills).
 
 Everything else is on the [blog index](https://ftrout.github.io/blog/), or
-browse by [tag](https://ftrout.github.io/tags/).
+browse by [topic](https://ftrout.github.io/topics/).
 
 ## Feedback
 
@@ -73,7 +73,7 @@ URL. Site identity, navigation and social links live in `src/consts.ts`.
 title: "Post title"
 description: "One or two sentences for lists, feeds and link previews."
 pubDate: 2026-09-18
-tags: [agents, security]      # lowercase, kebab-case
+tags: [agents, llm-evals]     # lowercase, kebab-case
 series: "Evals in Practice"   # optional; requires seriesOrder
 seriesOrder: 1
 draft: false                  # drafts render in dev only

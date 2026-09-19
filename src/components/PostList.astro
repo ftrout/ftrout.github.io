@@ -1,39 +1,63 @@
 ---
-import { readingTime, type Post } from '../utils/posts';
+import { readingTime, type DateStyle, type Post } from '../utils/posts';
 import { slugify } from '../utils/slug';
 import FormattedDate from './FormattedDate.astro';
 import TagList from './TagList.astro';
 
 interface Props {
   posts: Post[];
+  /** Heading level for titles, so pages never skip a level. */
+  level?: 'h2' | 'h3';
+  dateStyle?: DateStyle;
+  /** Tag slug to leave out of each row, e.g. on that tag's page. */
+  hideTag?: string;
+  /** Show "Series, part N" in the meta line. Off on the series page itself. */
+  showSeries?: boolean;
+  /** Lead each row with the series part number instead of the date. */
+  numbered?: boolean;
 }
 
-const { posts } = Astro.props;
+const {
+  posts,
+  level: Title = 'h3',
+  dateStyle = 'full',
+  hideTag,
+  showSeries = true,
+  numbered = false,
+} = Astro.props;
 ---
 
-<ul class="post-list">
+<ul class:list={['post-list', { numbered }]}>
   {posts.map((post) => (
     <li>
-      <div class="post-date">
-        <FormattedDate date={post.data.pubDate} />
-      </div>
+      {numbered ? (
+        <div class="part-num" aria-hidden="true">{post.data.seriesOrder}</div>
+      ) : (
+        <div class="post-date">
+          <FormattedDate date={post.data.pubDate} style={dateStyle} />
+        </div>
+      )}
       <div class="post-body">
-        <h3 class="post-title">
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-        </h3>
+        <Title class="post-title">
+          <a href={`/blog/${post.id}/`}>
+            {numbered && <span class="visually-hidden">Part {post.data.seriesOrder}: </span>}
+            {post.data.title}
+          </a>
+        </Title>
         <p class="post-desc">{post.data.description}</p>
         <div class="meta">
-          <TagList tags={post.data.tags} />
-          {post.data.series && (
-            <span class="meta-item">
-              <span class="dot"></span>
-              <span><a href={`/series/${slugify(post.data.series)}/`}>{post.data.series}</a>, part {post.data.seriesOrder}</span>
-            </span>
-          )}
-          <span class="meta-item">
-            <span class="dot"></span>
+          <div class="meta-row">
+            {numbered && <FormattedDate date={post.data.pubDate} />}
             <span>{readingTime(post.body)} min read</span>
-          </span>
+            {showSeries && post.data.series && (
+              <span>
+                <a href={`/series/${slugify(post.data.series)}/`}>{post.data.series}</a>, part {post.data.seriesOrder}
+              </span>
+            )}
+            {post.data.tags.some((t) => slugify(t) !== hideTag) && (
+              <span class="meta-tags"><TagList tags={post.data.tags} hide={hideTag} /></span>
+            )}
+          </div>
         </div>
       </div>
     </li>
