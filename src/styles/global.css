@@ -31,15 +31,15 @@
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
     "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
 
-  --text-xs: 0.8125rem;
-  --text-sm: 0.875rem;
-  --text-base: 1.0625rem;
-  --text-md: 1.1875rem; /* article body */
-  --text-lg: 1.25rem;
-  --text-xl: 1.625rem;
-  --text-2xl: 2.125rem;
-  --text-3xl: 2.875rem;
-  --text-display: clamp(2.5rem, 4.4vw, 3.5rem);
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 1rem;
+  --text-md: 1.0625rem; /* article body */
+  --text-lg: 1.125rem;
+  --text-xl: 1.4375rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.5rem;
+  --text-display: clamp(2.25rem, 3.8vw, 3rem);
 
   /* Space: one scale, used everywhere */
   --space-1: 0.25rem;
@@ -235,7 +235,7 @@ main.container {
   color: var(--fg);
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
@@ -604,7 +604,7 @@ main.container {
   margin-top: var(--space-6);
 }
 .hero-photo {
-  width: 13rem;
+  width: 11.5rem;
   aspect-ratio: 1;
   margin-top: 0.4rem;
   border-radius: 50%;
@@ -919,8 +919,8 @@ main.container {
 .article-header .lede {
   margin-top: var(--space-4);
   font-family: var(--font-serif);
-  font-size: 1.4375rem;
-  line-height: 1.4;
+  font-size: 1.25rem;
+  line-height: 1.45;
   max-width: none;
 }
 .article-header .meta {
@@ -957,12 +957,12 @@ main.container {
   scroll-margin-top: 5.5rem;
 }
 .prose h2 {
-  font-size: 1.875rem;
+  font-size: 1.625rem;
   letter-spacing: -0.015em;
   margin-top: 2.1em;
 }
 .prose h3 {
-  font-size: 1.375rem;
+  font-size: 1.25rem;
   margin-top: 1.7em;
 }
 .prose h2 + *,
@@ -1032,7 +1032,7 @@ pre {
   margin: 0;
   overflow-x: auto;
   padding: 1.15rem 1.35rem;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   line-height: 1.65;
   tab-size: 4;
   border: 1px solid var(--rule);
@@ -1420,23 +1420,22 @@ pre[data-language="plaintext"] {
 
 @media (max-width: 480px) {
   :root {
-    --text-3xl: 2.25rem;
-    --text-2xl: 1.75rem;
-    --text-xl: 1.375rem;
-    --text-md: 1.125rem;
+    --text-3xl: 2rem;
+    --text-2xl: 1.625rem;
+    --text-xl: 1.25rem;
     --gutter: 1.25rem;
   }
   main.container {
     padding-block: var(--space-6) var(--space-8);
   }
   .brand {
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
   }
   .site-nav {
     gap: var(--space-4);
   }
   .article-header .lede {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
   .lead-post {
     padding-block: var(--space-6);
