@@ -3,6 +3,8 @@
  */
 export const SITE = {
   title: 'Frank Trout',
+  /** Wordmark in the site header. */
+  brand: 'Frank Trout’s AI Blog',
   /** Short role line, used on the About page and in link previews. */
   role: 'AI engineer on a security operations team',
   /** The home page headline. */

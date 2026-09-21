@@ -7,7 +7,7 @@ const isCurrent = (match: readonly string[]) => match.some((m) => path.startsWit
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/" aria-label={`${SITE.title}, home`}>{SITE.title}</a>
+    <a class="brand" href="/" aria-label={`${SITE.brand}, home`}>{SITE.brand}</a>
     <nav class="site-nav" aria-label="Primary">
       {NAV.map((item) => (
         <a href={item.href} aria-current={isCurrent(item.match) ? 'page' : undefined}>

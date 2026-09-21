@@ -570,8 +570,11 @@ main.container {
    ========================================================================== */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: var(--space-8);
+  /* Text column sized to its content, so the photo sits beside the text
+     instead of at the far edge of the page. */
+  grid-template-columns: minmax(0, max-content) auto;
+  justify-content: start;
+  column-gap: var(--space-7);
   align-items: start;
   padding-top: var(--space-2);
 }
