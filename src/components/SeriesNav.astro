@@ -1,6 +1,5 @@
 ---
 import type { SeriesNeighbors } from '../utils/posts';
-import SeriesParts from './SeriesParts.astro';
 
 interface Props {
   neighbors: SeriesNeighbors | null;
@@ -13,17 +12,16 @@ const { neighbors } = Astro.props;
   <nav class="series-nav" aria-label="Series navigation">
     <p class="kicker">Series · Part {neighbors.index} of {neighbors.total}</p>
     <h2><a href={`/series/${neighbors.slug}/`}>{neighbors.name}</a></h2>
-    <SeriesParts parts={neighbors.parts} current={neighbors.index} />
     <div class="prev-next">
       {neighbors.prev && (
         <a class="prev" href={`/blog/${neighbors.prev.id}/`} rel="prev">
-          <span class="label">← Previous</span>
+          <span class="label">← Part {neighbors.index - 1}</span>
           <span>{neighbors.prev.data.title}</span>
         </a>
       )}
       {neighbors.next && (
         <a class="next" href={`/blog/${neighbors.next.id}/`} rel="next">
-          <span class="label">Next →</span>
+          <span class="label">Part {neighbors.index + 1} →</span>
           <span>{neighbors.next.data.title}</span>
         </a>
       )}

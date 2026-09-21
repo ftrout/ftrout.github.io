@@ -22,6 +22,8 @@ export const SITE = {
   footerNote: 'Written by a practitioner, for practitioners. Corrections welcome.',
   author: 'Frank Trout',
   url: 'https://ftrout.github.io',
+  /** Source repository; corrections are filed as issues here. */
+  repo: 'https://github.com/ftrout/ftrout.github.io',
   /** Fallback social preview image. Posts get their own, generated at build time. */
   ogImage: '/og/default.png',
   locale: 'en_US',

@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
 import PostList from '../components/PostList.astro';
-import SeriesParts from '../components/SeriesParts.astro';
 import { SERIES_INFO, SITE, SOCIALS } from '../consts';
 import { getAllSeries, getPosts } from '../utils/posts';
 
@@ -64,10 +63,13 @@ const [leadIn, tailOut] = hasEmphasis ? SITE.tagline.split(emphasis) : [SITE.tag
         <a class="link-arrow" href="/topics/">All topics →</a>
       </div>
       {series.map((s) => (
-        <div class="series-block">
+        <div class="series-card">
           <h3><a href={`/series/${s.slug}/`}>{s.name}</a></h3>
           {SERIES_INFO[s.name] && <p class="series-desc">{SERIES_INFO[s.name].description}</p>}
-          <SeriesParts parts={s.parts} />
+          <p class="series-actions">
+            <a class="btn" href={`/blog/${s.parts[0].id}/`}>Start with part 1</a>
+            <a class="link-arrow" href={`/series/${s.slug}/`}>All {s.parts.length} parts →</a>
+          </p>
         </div>
       ))}
     </section>

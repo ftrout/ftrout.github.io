@@ -4,6 +4,8 @@ import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
 import SeriesNav from '../components/SeriesNav.astro';
+import ArticleEnd from '../components/ArticleEnd.astro';
+import { SITE } from '../consts';
 import TableOfContents from '../components/TableOfContents.astro';
 import { readingTime, type Post, type SeriesNeighbors } from '../utils/posts';
 
@@ -40,6 +42,10 @@ const minutes = readingTime(post.body);
         <p class="lede">{description}</p>
         <div class="meta">
           <div class="meta-row">
+            <span class="byline">
+              {SITE.avatar && <img src={SITE.avatar} alt="" width="24" height="24" />}
+              <a href="/about/" rel="author">{SITE.author}</a>
+            </span>
             <FormattedDate date={pubDate} />
             {updatedDate && <span>Updated <FormattedDate date={updatedDate} /></span>}
             <span>{minutes} min read</span>
@@ -54,6 +60,7 @@ const minutes = readingTime(post.body);
       </div>
 
       <SeriesNav neighbors={neighbors} />
+      <ArticleEnd title={title} />
     </article>
 
     <aside>

@@ -1,0 +1,26 @@
+---
+import { SITE, SOCIALS } from '../consts';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const issueUrl = `${SITE.repo}/issues/new?title=${encodeURIComponent(`Correction: ${title}`)}`;
+---
+
+<footer class="article-end">
+  {SITE.avatar && <img class="article-end-photo" src={SITE.avatar} alt="" width="56" height="56" />}
+  <div>
+    <p class="article-end-name">Written by <a href="/about/" rel="author">{SITE.author}</a></p>
+    <p class="article-end-bio">
+      {SITE.role[0].toUpperCase() + SITE.role.slice(1)}. I write about what actually
+      happens when AI systems meet security operations, including the parts that go wrong.
+    </p>
+    <ul class="article-end-links">
+      <li><a href="/rss.xml">Follow by RSS</a></li>
+      {SOCIALS.github && <li><a href={SOCIALS.github} rel="me noopener">GitHub</a></li>}
+      <li><a href={issueUrl} rel="noopener">Found an error? Open an issue</a></li>
+    </ul>
+  </div>
+</footer>

@@ -894,12 +894,31 @@ main.container {
 /* ==========================================================================
    Article
    ========================================================================== */
+/*
+ * The article column is wider than the reading measure: prose stays at
+ * --measure, while code and tables use the full --wide width.
+ */
 .article-layout {
+  --wide: 50rem;
   display: grid;
-  grid-template-columns: minmax(0, var(--measure)) 13rem;
+  grid-template-columns: minmax(0, var(--wide)) 12rem;
   justify-content: space-between;
   align-items: start;
-  column-gap: var(--space-8);
+  column-gap: var(--space-7);
+}
+.article-layout > article {
+  container-type: inline-size;
+}
+.article-header,
+.article-end,
+.series-nav {
+  max-width: var(--measure);
+}
+.prose > pre,
+.prose > .code-block,
+.prose > .table-wrap {
+  width: 100cqi;
+  max-width: none;
 }
 .article-layout > article {
   min-width: 0;
@@ -1346,6 +1365,7 @@ pre[data-language="plaintext"] {
    ========================================================================== */
 @media (max-width: 1080px) {
   .article-layout {
+    --wide: var(--measure);
     grid-template-columns: minmax(0, var(--measure));
     justify-content: center;
   }
@@ -1384,6 +1404,21 @@ pre[data-language="plaintext"] {
 }
 
 @media (max-width: 600px) {
+  /* Code runs edge to edge on phones: every character of width counts. */
+  .prose > pre,
+  .prose > .code-block {
+    width: auto;
+    margin-inline: calc(-1 * var(--gutter));
+  }
+  .prose > pre,
+  .prose > .code-block pre {
+    border-radius: 0;
+    border-inline: 0;
+    padding-inline: var(--gutter);
+  }
+  .code-block::after {
+    border-radius: 0;
+  }
   .post-list > li {
     grid-template-columns: 1fr;
     row-gap: var(--space-1);
@@ -1530,4 +1565,114 @@ pre[data-language="plaintext"] {
 
 .nowrap {
   white-space: nowrap;
+}
+
+/* Home: one compact card per series; the full list lives on the series page. */
+.series-card {
+  margin-top: var(--space-5);
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--accent);
+}
+.series-card + .series-card {
+  margin-top: var(--space-6);
+}
+.series-card h3 {
+  font-size: var(--text-xl);
+}
+.series-card h3 a {
+  color: var(--fg);
+}
+.series-card h3 a:hover {
+  color: var(--accent);
+}
+.series-card .series-desc {
+  margin-top: var(--space-2);
+  color: var(--fg-2);
+  max-width: 40em;
+  text-wrap: pretty;
+}
+.series-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-4);
+}
+
+/* Byline: first item of the article meta line. inline-block, not flex, so
+   the name keeps the text baseline shared with the date. */
+.byline img {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5em;
+  vertical-align: -0.45em;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+.meta .byline a {
+  color: var(--fg-2);
+  font-weight: 500;
+}
+.meta .byline a:hover {
+  color: var(--accent);
+}
+
+/* End of article: who wrote it, how to follow, how to correct it. */
+.article-end {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-5);
+  align-items: start;
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--rule-strong);
+}
+.series-nav + .article-end {
+  margin-top: var(--space-7);
+}
+.article-end-photo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--rule-strong);
+}
+.article-end-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--fg);
+}
+.article-end-name a {
+  color: inherit;
+}
+.article-end-name a:hover {
+  color: var(--accent);
+}
+.article-end-bio {
+  margin-top: var(--space-1);
+  color: var(--fg-2);
+  max-width: 36em;
+  text-wrap: pretty;
+}
+.article-end-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-3);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+@media print {
+  .article-end {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .article-end {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-3);
+  }
 }
